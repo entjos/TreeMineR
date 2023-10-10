@@ -17,26 +17,48 @@ TreeScan(
 )
 }
 \arguments{
-\item{data}{The dataset used for the computation}
+\item{data}{The dataset used for the computation. The dataset needs to include the
+ following columns:
+ \itemize{
+   \item{An integer that is unique to every individual.}
+   \item{A string identifying the unique diagnoses or leafs for each
+              individual.}
+   \item{A case indicator}
+   }
 
-\item{exposure}{The name of the exposure variable}
+   The dataset needs to be in long format, i.e., each individual has
+   multiple rows depending of unique events that occurred to the
+   individuals, e.g.
 
-\item{p}{The proportion of exposed individuls in the dataset. The default is the
+   ```
+    id diag case
+     1 K251    0
+     2 Q702    0
+     3  G96    0
+     3 S949    0
+     4 S951    0
+     4 N882    0
+     4 R610    0
+     4  E67    0
+   ```}
+
+\item{exposure}{The name of the exposure variable in `data`.}
+
+\item{p}{The proportion of exposed individuals in the dataset. The default is the
 proportion of exposed individuals among unique individuals in `data`.}
 
-\item{leafs}{The name of the leaf variable}
+\item{leafs}{The name of the leaf variable in `data`.}
 
-\item{id}{The name of the id variable}
+\item{id}{The name of the id variable in `data`.}
 
-\item{n_monte_carlo_sim}{The number of Monte Carolo simulations used for calculating P-values.}
+\item{n_monte_carlo_sim}{The number of Monte-Carlo simulations to be used for calculating P-values.}
 
-\item{n_level}{The number of levels of the tree. The default is the maximum character
-length found among the leafs.}
+\item{n_level}{The maximum number of character that identify a unique cut. The default
+is the maximum character length found in `leafs`.}
 
-\item{parallel}{Logical indicator for whether the Monte Carlo simulations should be
-parallelised.}
-
-\item{parallel_control}{A list of arguments passed to `makeCluster` for parallisation.}
+\item{future_control}{A list of arguments passed `future::plan`. This is useful if one would like
+to parallelise the Monte-Carlo simulations to decrease the computation
+time. The default is a sequential run of the Monte-Carlo simulations.}
 }
 \description{
 Tree scan statistics for R
@@ -46,8 +68,6 @@ TreeScan(diagnoses,
          exposure = case,
          leafs = diag,
          id = id,
-         n_monte_carlo_sim = 10,
-         parallel = TRUE,
-         parallel_control = list(2))
+         n_monte_carlo_sim = 10)
 
 }
