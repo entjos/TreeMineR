@@ -10,6 +10,8 @@
 #'    \item{case}{Indicator for case status}
 #'    \item{diag}{An ICD-10 diagnosis code}
 #' }
+#'
+#' @keywords data
 set.seed(1)
 
 comp <- data.frame(id = rep(1:10000, rbinom(10000, 10, 0.2)))
