@@ -78,13 +78,13 @@ TreeScan <- function(data,
   # Decleare variables used in data.table for R CMD check
   n1 <- n0 <- n <- llr <- iteration <- NULL
 
-  # Update n_level and p if not defined in function call
-  if(!n_level) n_level <- max(nchar(data[[as.character(leafs)]]))
-  if(!p) p <- unique(data, by = as.character(id))[, sum(get(..exposure)) / .N]
-
   # Convert data to data.table
   data <- data.table::copy(data)
   data.table::setDT(data)
+
+  # Update n_level and p if not defined in function call
+  if(!n_level) n_level <- max(nchar(data[[as.character(leafs)]]))
+  if(!p) p <- unique(data, by = as.character(id))[, sum(get(..exposure)) / .N]
 
   # Set up parallel or sequential processing
   do.call(future::plan,
