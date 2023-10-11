@@ -10,7 +10,7 @@ TreeScan(
   p = FALSE,
   leafs,
   id,
-  n_monte_carlo_sim = 1000,
+  n_monte_carlo_sim = 9999,
   random_seed = FALSE,
   n_level = FALSE,
   future_control = list(strategy = "sequential")
@@ -52,6 +52,8 @@ proportion of exposed individuals among unique individuals in `data`.}
 \item{id}{The name of the id variable in `data`.}
 
 \item{n_monte_carlo_sim}{The number of Monte-Carlo simulations to be used for calculating P-values.}
+
+\item{random_seed}{Random seed used for the Monte-Carlo simulations.}
 
 \item{n_level}{The maximum number of character that identify a unique cut. The default
 is the maximum character length found in `leafs`.}

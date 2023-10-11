@@ -42,6 +42,8 @@
 #' @param n_monte_carlo_sim
 #'  The number of Monte-Carlo simulations to be used for calculating P-values.
 #'
+#' @param random_seed Random seed used for the Monte-Carlo simulations.
+#'
 #' @param n_level
 #'  The maximum number of character that identify a unique cut. The default
 #'  is the maximum character length found in `leafs`.
@@ -76,7 +78,7 @@ TreeScan <- function(data,
   id       <- substitute(id)
 
   # Decleare variables used in data.table for R CMD check
-  n1 <- n0 <- n <- llr <- iteration <- NULL
+  n1 <- n0 <- n <- llr <- iteration <- ..exposure <- ..p <- NULL
 
   # Convert data to data.table
   data <- data.table::copy(data)
@@ -87,8 +89,9 @@ TreeScan <- function(data,
   if(!p) p <- unique(data, by = as.character(id))[, sum(get(..exposure)) / .N]
 
   # Set up parallel or sequential processing
-  do.call(future::plan,
-          future_control)
+  oplan <- do.call(future::plan,
+                   future_control)
+  on.exit(future::plan(oplan), add = TRUE)
 
   # Estimate LLRs
   temp <- future.apply::future_lapply(
