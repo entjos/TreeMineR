@@ -66,7 +66,7 @@ TreeScan <- function(data,
                      p = FALSE,
                      leafs,
                      id,
-                     n_monte_carlo_sim = 1000,
+                     n_monte_carlo_sim = 9999,
                      random_seed = FALSE,
                      n_level = FALSE,
                      future_control = list(strategy = "sequential")){
@@ -80,8 +80,7 @@ TreeScan <- function(data,
 
   # Update n_level and p if not defined in function call
   if(!n_level) n_level <- max(nchar(data[[as.character(leafs)]]))
-  if(!p) p <- with(unique(data, by = as.character(id)),
-                   sum(get(exposure) == 1) / sum(get(exposure) == 0))
+  if(!p) p <- unique(data, by = as.character(id))[, sum(get(..exposure)) / .N]
 
   # Convert data to data.table
   data <- data.table::copy(data)
@@ -93,7 +92,7 @@ TreeScan <- function(data,
 
   # Estimate LLRs
   temp <- future.apply::future_lapply(
-    X = seq_len(n_monte_carlo_sim),
+    X = seq_len(1 + n_monte_carlo_sim),
     future.packages = "data.table",
     future.seed = random_seed,
     FUN = function(i){
@@ -109,7 +108,7 @@ TreeScan <- function(data,
 
                if(i != 1){
                  counts[, n  := n0 + n1]
-                 counts[, n1 := stats::rbinom(n, 1, .1)]
+                 counts[, n1 := mapply(stats::rbinom, 1, n, ..p)]
                  counts[, n0 := n - n1]
                }
 
@@ -122,17 +121,19 @@ TreeScan <- function(data,
     }) |> data.table::rbindlist()
 
   # Get ranke of llr
-  temp <- temp[order(llr, decreasing = TRUE),
-               rank := row.names(.SD), by = "cut"]
+  test_distribution <- temp[iteration != 1,
+                            list(max_llr = max(llr, na.rm = TRUE)),
+                            by = iteration]
 
-  # Get observed llrs
-  temp <- temp[iteration == 1]
+  temp <- temp[iteration == 1 & !is.nan(llr)]
+  temp[, rank := mapply(\(x) sum(test_distribution$max_llr > x) + 1, llr)]
 
   # Output
-  temp[, list(cut,
-              n1,
-              n0,
-              llr,
-              p = as.numeric(rank)/(n_monte_carlo_sim + 1))]
+  temp[order(llr, decreasing = TRUE),
+       list(cut,
+            n1,
+            n0,
+            llr,
+            p = as.numeric(rank)/(n_monte_carlo_sim + 1))]
 
 }
