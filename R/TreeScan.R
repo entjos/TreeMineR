@@ -44,9 +44,11 @@
 #'
 #' @param random_seed Random seed used for the Monte-Carlo simulations.
 #'
-#' @param n_level
-#'  The maximum number of character that identify a unique cut. The default
-#'  is the maximum character length found in `leafs`.
+#' @param cut_positions
+#'  The character positions in the leaf variable that define a cut. The default
+#'  is a cut after each character in `leafs`. E.g. the code `A17` would
+#'  by default lead to the cuts `A`, `A1`, and `A17`. However, if
+#'  `cut_positions = c(1, 3)` the leaf would only be cut at `A` and `A17`.
 #'
 #' @param future_control
 #'  A list of arguments passed `future::plan`. This is useful if one would like
@@ -65,14 +67,15 @@
 
 TreeScan <- function(data,
                      exposure,
-                     p = FALSE,
+                     p = NULL,
                      leafs,
                      id,
                      n_monte_carlo_sim = 9999,
-                     random_seed = FALSE,
-                     n_level = FALSE,
+                     random_seed = NULL,
+                     cut_positions = NULL,
                      future_control = list(strategy = "sequential")){
 
+  # Prepare inputs for further use ---------------------------------------------
   exposure <- substitute(exposure)
   leafs    <- substitute(leafs)
   id       <- substitute(id)
@@ -84,9 +87,30 @@ TreeScan <- function(data,
   data <- data.table::copy(data)
   data.table::setDT(data)
 
+  # Assign default values if not specified -------------------------------------
+
   # Update n_level and p if not defined in function call
-  if(!n_level) n_level <- max(nchar(data[[as.character(leafs)]]))
-  if(!p) p <- unique(data, by = as.character(id))[, sum(get(..exposure)) / .N]
+  if(is.null(cut_positions)) {
+    cut_positions <- seq_len(max(nchar(data[[as.character(leafs)]])))
+  }
+
+  if(is.null(p)) {
+    p <- unique(data, by = as.character(id))[, sum(get(..exposure)) / .N]
+  }
+
+  # Check user input -----------------------------------------------------------
+  if(max(cut_positions) > max(nchar(data[[as.character(leafs)]]))){
+    x <- cut_positions[cut_positions > max(nchar(data[[as.character(leafs)]]))]
+
+    cli::cli_abort(
+      c(paste("Your cut position(s)", paste(x, collapse = ", "), "are bigger",
+              " than the maximum number of characters defining a leaf."),
+        " " = paste("Please specify cut positions that are smaller than the",
+                    "maximum number of charcters defining a leaf."))
+    )
+  }
+
+  # Run tree based scan statistic ----------------------------------------------
 
   # Set up parallel or sequential processing
   oplan <- do.call(future::plan,
@@ -97,10 +121,10 @@ TreeScan <- function(data,
   temp <- future.apply::future_lapply(
     X = seq_len(1 + n_monte_carlo_sim),
     future.packages = "data.table",
-    future.seed = random_seed,
+    future.seed = ifelse(is.na(random_seed), FALSE, random_seed),
     FUN = function(i){
 
-      lapply(seq_len(n_level),
+      lapply(cut_positions,
              function(j){
 
                counts <- get_cuts(data,
@@ -131,7 +155,8 @@ TreeScan <- function(data,
   temp <- temp[iteration == 1 & !is.nan(llr)]
   temp[, rank := mapply(\(x) sum(test_distribution$max_llr > x) + 1, llr)]
 
-  # Output
+  # Prepare output -------------------------------------------------------------
+
   temp[order(llr, decreasing = TRUE),
        list(cut,
             n1,

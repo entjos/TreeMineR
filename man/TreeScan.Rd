@@ -7,12 +7,12 @@
 TreeScan(
   data,
   exposure,
-  p = FALSE,
+  p = NULL,
   leafs,
   id,
   n_monte_carlo_sim = 9999,
-  random_seed = FALSE,
-  n_level = FALSE,
+  random_seed = NULL,
+  cut_positions = NULL,
   future_control = list(strategy = "sequential")
 )
 }
@@ -55,8 +55,10 @@ proportion of exposed individuals among unique individuals in `data`.}
 
 \item{random_seed}{Random seed used for the Monte-Carlo simulations.}
 
-\item{n_level}{The maximum number of character that identify a unique cut. The default
-is the maximum character length found in `leafs`.}
+\item{cut_positions}{The character positions in the leaf variable that define a cut. The default
+is a cut after each character in `leafs`. E.g. the code `A17` would
+by default lead to the cuts `A`, `A1`, and `A17`. However, if
+`cut_positions = c(1, 3)` the leaf would only be cut at `A` and `A17`.}
 
 \item{future_control}{A list of arguments passed `future::plan`. This is useful if one would like
 to parallelise the Monte-Carlo simulations to decrease the computation
