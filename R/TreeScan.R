@@ -1,54 +1,48 @@
 #' Tree scan statistics for R
 #'
-#' @param data
-#'  The dataset used for the computation. The dataset needs to include the
-#'  following columns:
+#' @param counts
+#'  A data set including the number of events among exposed and unexposed for
+#'  each lead. The dataset needs to include the following columns:
 #'  \itemize{
-#'    \item{An integer that is unique to every individual.}
-#'    \item{A string identifying the unique diagnoses or leafs for each
-#'               individual.}
-#'    \item{A case indicator}
+#'    \item{`leaf`}{The code defining the leaf.}
+#'    \item{`n0`}{The number of events within the leaf among the unexposed.}
+#'    \item{`n1`}{The number of events within the leaf among the exposed.}
 #'    }
 #'
-#'    The dataset needs to be in long format, i.e., each individual has
-#'    multiple rows depending of unique events that occurred to the
-#'    individuals, e.g.
+#'    See below for the first and last rows included in the example dataset.
 #'
 #'    ```
-#'     id diag case
-#'      1 K251    0
-#'      2 Q702    0
-#'      3  G96    0
-#'      3 S949    0
-#'      4 S951    0
-#'      4 N882    0
-#'      4 R610    0
-#'      4  E67    0
+#'    leaf n0 n1
+#'    1: K251  1  0
+#'    2: Q702  5  0
+#'    3:  G96  3  0
+#'    4: S949  2  0
+#'    5: S951  2  0
+#'    ---
+#'    9492: T118  0  1
+#'    9493: A932  0  1
+#'    9494: D350  0  1
+#'    9495: L410  0  1
+#'    9496: T524  0  1
 #'    ```
 #'
-#' @param exposure
-#'  The name of the exposure variable in `data`.
+#' @param tree
+#'  A dataset with one variable `pathString` defining the tree structure
+#'  that you would like to use. This dataset can, e.g., be created using
+#'   \code{\link{create_tree}}.
+#'
+#' @param delimiter
+#'  A character defining the delimiter of different tree levels within your
+#'  `pathString`. The default is `/`.
 #'
 #' @param p
 #'  The proportion of exposed individuals in the dataset. The default is the
 #'  proportion of exposed individuals among unique individuals in `data`.
 #'
-#' @param leafs
-#'  The name of the leaf variable in `data`.
-#'
-#' @param id
-#'  The name of the id variable in `data`.
-#'
 #' @param n_monte_carlo_sim
 #'  The number of Monte-Carlo simulations to be used for calculating P-values.
 #'
 #' @param random_seed Random seed used for the Monte-Carlo simulations.
-#'
-#' @param cut_positions
-#'  The character positions in the leaf variable that define a cut. The default
-#'  is a cut after each character in `leafs`. E.g. the code `A17` would
-#'  by default lead to the cuts `A`, `A1`, and `A17`. However, if
-#'  `cut_positions = c(1, 3)` the leaf would only be cut at `A` and `A17`.
 #'
 #' @param future_control
 #'  A list of arguments passed `future::plan`. This is useful if one would like
@@ -63,52 +57,73 @@
 #'          n_monte_carlo_sim = 10)
 #'
 #' @import data.table
-#' @export
+#' @export TreeScan
 
-TreeScan <- function(data,
-                     exposure,
-                     p = NULL,
-                     leafs,
-                     id,
+TreeScan <- function(counts,
+                     tree,
+                     delimiter = "/",
+                     p,
                      n_monte_carlo_sim = 9999,
-                     random_seed = NULL,
-                     cut_positions = NULL,
+                     random_seed = FALSE,
                      future_control = list(strategy = "sequential")){
-
-  # Prepare inputs for further use ---------------------------------------------
-  exposure <- substitute(exposure)
-  leafs    <- substitute(leafs)
-  id       <- substitute(id)
 
   # Decleare variables used in data.table for R CMD check
   n1 <- n0 <- n <- llr <- iteration <- ..exposure <- ..p <- NULL
 
-  # Convert data to data.table
-  data <- data.table::copy(data)
-  data.table::setDT(data)
-
-  # Assign default values if not specified -------------------------------------
-
-  # Update n_level and p if not defined in function call
-  if(is.null(cut_positions)) {
-    cut_positions <- seq_len(max(nchar(data[[as.character(leafs)]])))
-  }
-
-  if(is.null(p)) {
-    p <- unique(data, by = as.character(id))[, sum(get(..exposure)) / .N]
-  }
-
   # Check user input -----------------------------------------------------------
-  if(max(cut_positions) > max(nchar(data[[as.character(leafs)]]))){
-    x <- cut_positions[cut_positions > max(nchar(data[[as.character(leafs)]]))]
 
+  if("leaf" %in% colnames(tree)) {
     cli::cli_abort(
-      c(paste("Your cut position(s)", paste(x, collapse = ", "), "are bigger",
-              " than the maximum number of characters defining a leaf."),
-        " " = paste("Please specify cut positions that are smaller than the",
-                    "maximum number of charcters defining a leaf."))
+      c(
+        "x" = "`tree` includes a column named `leaf`, which is reserved by
+        TreeScan.",
+        "i" = "Please replace `leaf` with another name."
+      )
     )
   }
+
+  if(!("pathString" %in% colnames(tree))) {
+    cli::cli_abort(
+      c(
+        "x" = "Could not find column `pathString` in `tree`",
+        "i" = "Please add pathString column to `tree`"
+      )
+    )
+  }
+
+  if(!any(grepl(delimiter, tree$pathString, fixed = TRUE))){
+    cli::cli_abort(
+      c(
+        "x" = "I could not any match for {delimiter} in `pathString`.",
+        "Are you sure you defined the right delimiter in your `TreeScan` call?"
+      )
+    )
+  }
+
+  # Get cuts -------------------------------------------------------------------
+
+  tree$leaf <- gsub(paste0(".*(?<=", delimiter, ")(.*)"), "\\1",
+                    tree[["pathString"]],
+                    perl = TRUE)
+
+  if(any(!(counts$leaf %in% tree$leaf))) {
+    cli::cli_abort(
+      c(
+        "x" = "The following leafs are not included on your tree:
+        {(counts$leaf[!(counts$leaf %in% tree$leaf)])}",
+        "i" = "All leafs must be included in your tree."
+      )
+    )
+  }
+
+  comb <- merge(counts,
+                tree,
+                by = "leaf",
+                all.x = TRUE)
+
+  comb[, cut := strsplit(pathString, delimiter, fixed = TRUE)]
+  comb <- comb[, list(cut = unlist(cut)), list(n0, n1)]
+  comb <- comb[, list(n0 = sum(n0), n1 = sum(n1)), by = cut]
 
   # Run tree based scan statistic ----------------------------------------------
 
@@ -121,29 +136,17 @@ TreeScan <- function(data,
   temp <- future.apply::future_lapply(
     X = seq_len(1 + n_monte_carlo_sim),
     future.packages = "data.table",
-    future.seed = ifelse(is.na(random_seed), FALSE, random_seed),
+    future.seed = random_seed,
     FUN = function(i){
 
-      lapply(cut_positions,
-             function(j){
+      if(i != 1){
+        comb[, n  := n0 + n1]
+        comb[, n1 := mapply(stats::rbinom, 1, n, ..p)]
+        comb[, n0 := n - n1]
+      }
 
-               counts <- get_cuts(data,
-                                  id,
-                                  exposure,
-                                  leafs,
-                                  n_char = j)
+      calc_llr(comb, i, p = p)
 
-               if(i != 1){
-                 counts[, n  := n0 + n1]
-                 counts[, n1 := mapply(stats::rbinom, 1, n, ..p)]
-                 counts[, n0 := n - n1]
-               }
-
-               calc_llr(counts, i, p = p)
-
-             })                 |>
-        data.table::rbindlist() |>
-        unique() # Only keep new leafs
 
     }) |> data.table::rbindlist()
 

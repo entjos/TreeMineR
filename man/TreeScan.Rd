@@ -5,60 +5,54 @@
 \title{Tree scan statistics for R}
 \usage{
 TreeScan(
-  data,
-  exposure,
-  p = NULL,
-  leafs,
-  id,
+  counts,
+  tree,
+  delimiter = "/",
+  p,
   n_monte_carlo_sim = 9999,
-  random_seed = NULL,
-  cut_positions = NULL,
+  random_seed = FALSE,
   future_control = list(strategy = "sequential")
 )
 }
 \arguments{
-\item{data}{The dataset used for the computation. The dataset needs to include the
- following columns:
+\item{counts}{A data set including the number of events among exposed and unexposed for
+ each lead. The dataset needs to include the following columns:
  \itemize{
-   \item{An integer that is unique to every individual.}
-   \item{A string identifying the unique diagnoses or leafs for each
-              individual.}
-   \item{A case indicator}
+   \item{`leaf`}{The code defining the leaf.}
+   \item{`n0`}{The number of events within the leaf among the unexposed.}
+   \item{`n1`}{The number of events within the leaf among the exposed.}
    }
 
-   The dataset needs to be in long format, i.e., each individual has
-   multiple rows depending of unique events that occurred to the
-   individuals, e.g.
+   See below for the first and last rows included in the example dataset.
 
    ```
-    id diag case
-     1 K251    0
-     2 Q702    0
-     3  G96    0
-     3 S949    0
-     4 S951    0
-     4 N882    0
-     4 R610    0
-     4  E67    0
+   leaf n0 n1
+   1: K251  1  0
+   2: Q702  5  0
+   3:  G96  3  0
+   4: S949  2  0
+   5: S951  2  0
+   ---
+   9492: T118  0  1
+   9493: A932  0  1
+   9494: D350  0  1
+   9495: L410  0  1
+   9496: T524  0  1
    ```}
 
-\item{exposure}{The name of the exposure variable in `data`.}
+\item{tree}{A dataset with one variable `pathString` defining the tree structure
+that you would like to use. This dataset can, e.g., be created using
+ \code{\link{create_tree}}.}
+
+\item{delimiter}{A character defining the delimiter of different tree levels within your
+`pathString`. The default is `/`.}
 
 \item{p}{The proportion of exposed individuals in the dataset. The default is the
 proportion of exposed individuals among unique individuals in `data`.}
 
-\item{leafs}{The name of the leaf variable in `data`.}
-
-\item{id}{The name of the id variable in `data`.}
-
 \item{n_monte_carlo_sim}{The number of Monte-Carlo simulations to be used for calculating P-values.}
 
 \item{random_seed}{Random seed used for the Monte-Carlo simulations.}
-
-\item{cut_positions}{The character positions in the leaf variable that define a cut. The default
-is a cut after each character in `leafs`. E.g. the code `A17` would
-by default lead to the cuts `A`, `A1`, and `A17`. However, if
-`cut_positions = c(1, 3)` the leaf would only be cut at `A` and `A17`.}
 
 \item{future_control}{A list of arguments passed `future::plan`. This is useful if one would like
 to parallelise the Monte-Carlo simulations to decrease the computation
