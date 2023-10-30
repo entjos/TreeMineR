@@ -7,9 +7,15 @@
 #'    }
 #'
 #' @import data.table
-#' @export
+#' @export create_tree
 
 create_tree <- function(x){
+
+  # Check input
+  if(any(icd_10_codes$node == "", icd_10_codes$parent == "", na.rm = TRUE)){
+    cli::cli_abort("{.var node} and/or {.var parent} include empty cells",
+                   " " = "Please replace all empty cells with NAs.")
+  }
 
   # Do first merge of node and parents
   out <- merge(x,
@@ -39,13 +45,12 @@ create_tree <- function(x){
   # Cleaning up for outputting
   data.table::setcolorder(out, c("node.y", colnames(out)[-ncol(out)]))
   out[, parent := NULL]
-  colnames(out) <- c("child", paste0("parent", seq_len(ncol(out) - 1)))
 
   # Create pathString that can be used for defining cuts
   out[, pathString := do.call(paste, c(.SD, sep = "/")),
       .SDcols = rev(colnames(out))]
-  out[, pathString := gsub(".*\\/NA\\/", "", pathString)]
+  out[, pathString := gsub(".*\\/?NA\\/", "", pathString)]
 
   # Return out
-  as.data.frame(out)
+  as.data.frame(out[, "pathString"])
 }
