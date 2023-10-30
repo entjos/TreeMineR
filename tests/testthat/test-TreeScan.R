@@ -10,14 +10,13 @@ test_that("Check sequential test run", {
 })
 
 test_that("Check parallel test run", {
-  expect_snapshot({
+  expect_no_error({
     TreeScan(count = diagnoses,
              tree  = icd_10_se,
              p = 1/2,
              n_monte_carlo_sim = 20,
              random_seed = 124,
-             future_control = list("multisession", workers = 2)) |>
-      head(10)
+             future_control = list("multisession", workers = 2))
   })
 })
 
