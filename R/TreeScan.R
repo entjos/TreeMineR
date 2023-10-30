@@ -50,11 +50,11 @@
 #'  time. The default is a sequential run of the Monte-Carlo simulations.
 #'
 #' @examples
-#' TreeScan(diagnoses,
-#'          exposure = case,
-#'          leafs = diag,
-#'          id = id,
-#'          n_monte_carlo_sim = 10)
+#' TreeScan(count = diagnoses,
+#'          tree  = icd_10_se,
+#'          p = 1/2,
+#'          n_monte_carlo_sim = 10,
+#'          random_seed = 1234)
 #'
 #' @import data.table
 #' @export TreeScan
@@ -67,8 +67,8 @@ TreeScan <- function(counts,
                      random_seed = FALSE,
                      future_control = list(strategy = "sequential")){
 
-  # Decleare variables used in data.table for R CMD check
-  n1 <- n0 <- n <- llr <- iteration <- ..exposure <- ..p <- NULL
+  # Declare variables used in data.table for R CMD check
+  n1 <- n0 <- n <- llr <- iteration <- pathString <- ..p <- NULL
 
   # Check user input -----------------------------------------------------------
 

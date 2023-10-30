@@ -62,10 +62,10 @@ time. The default is a sequential run of the Monte-Carlo simulations.}
 Tree scan statistics for R
 }
 \examples{
-TreeScan(diagnoses,
-         exposure = case,
-         leafs = diag,
-         id = id,
-         n_monte_carlo_sim = 10)
+TreeScan(count = diagnoses,
+         tree  = icd_10_se,
+         p = 1/2,
+         n_monte_carlo_sim = 10,
+         random_seed = 1234)
 
 }
