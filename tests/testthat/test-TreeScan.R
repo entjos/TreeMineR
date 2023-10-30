@@ -1,6 +1,6 @@
 test_that("Check sequential test run", {
   expect_snapshot({
-    TreeScan(count = diagnoses_sum,
+    TreeScan(count = diagnoses,
              tree  = icd_10_se,
              p = 1/2,
              n_monte_carlo_sim = 10,
@@ -11,7 +11,7 @@ test_that("Check sequential test run", {
 
 test_that("Check parallel test run", {
   expect_snapshot({
-    TreeScan(count = diagnoses_sum,
+    TreeScan(count = diagnoses,
              tree  = icd_10_se,
              p = 1/2,
              n_monte_carlo_sim = 20,

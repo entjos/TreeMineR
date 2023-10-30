@@ -1,7 +1,7 @@
 # Check sequential test run
 
     Code
-      head(TreeScan(count = diagnoses_sum, tree = icd_10_se, p = 1 / 2,
+      head(TreeScan(count = diagnoses, tree = icd_10_se, p = 1 / 2,
       n_monte_carlo_sim = 10, random_seed = 1234), 10)
     Output
            cut n1 n0       llr p
@@ -19,7 +19,7 @@
 # Check parallel test run
 
     Code
-      head(TreeScan(count = diagnoses_sum, tree = icd_10_se, p = 1 / 2,
+      head(TreeScan(count = diagnoses, tree = icd_10_se, p = 1 / 2,
       n_monte_carlo_sim = 20, random_seed = 124, future_control = list("multisession",
         workers = 2)), 10)
     Output
