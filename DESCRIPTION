@@ -11,8 +11,7 @@ Encoding: UTF-8
 LazyData: true
 Depends: 
     R (>= 2.10),
-    data.table,
-    cli (>= 3.6.1)
+    data.table
 RoxygenNote: 7.2.3
 Suggests: 
     testthat (>= 3.0.0),
@@ -21,4 +20,5 @@ Suggests:
 Config/testthat/edition: 3
 Imports: 
     future,
-    future.apply
+    future.apply,
+    cli (>= 3.6.1)
