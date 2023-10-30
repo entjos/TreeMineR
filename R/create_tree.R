@@ -13,8 +13,12 @@ create_tree <- function(x){
 
   # Check input
   if(any(icd_10_codes$node == "", icd_10_codes$parent == "", na.rm = TRUE)){
-    cli::cli_abort("{.var node} and/or {.var parent} include empty cells",
-                   " " = "Please replace all empty cells with NAs.")
+    cli::cli_abort(
+      c(
+        "{.var node} and/or {.var parent} include empty cells",
+        " " = "Please replace all empty cells with NAs."
+      )
+    )
   }
 
   # Do first merge of node and parents
