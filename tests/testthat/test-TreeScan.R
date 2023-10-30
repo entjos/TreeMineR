@@ -1,70 +1,62 @@
 test_that("Check sequential test run", {
   expect_snapshot({
-    TreeScan(diagnoses,
-             exposure = case,
-             leafs = diag,
-             id = id,
-             random_seed = 1234,
-             n_monte_carlo_sim = 10) |>
+    TreeScan(count = diagnoses_sum,
+             tree  = icd_10_se,
+             p = 1/2,
+             n_monte_carlo_sim = 10,
+             random_seed = 1234) |>
       head(10)
   })
 })
 
 test_that("Check parallel test run", {
   expect_snapshot({
-    TreeScan(diagnoses,
-             exposure = case,
-             leafs = diag,
-             id = id,
-             random_seed = 1234,
+    TreeScan(count = diagnoses_sum,
+             tree  = icd_10_se,
+             p = 1/2,
              n_monte_carlo_sim = 20,
+             random_seed = 124,
              future_control = list("multisession", workers = 2)) |>
       head(10)
   })
 })
 
-test_that("Check user defined cut points", {
-  expect_equal({
-    temp <- TreeScan(diagnoses,
-                     exposure = case,
-                     leafs = diag,
-                     id = id,
-                     cut_positions = c(1, 3),
-                     random_seed = 1234,
-                     n_monte_carlo_sim = 20,
-                     future_control = list("multisession", workers = 2))
-
-    unique(nchar(temp$cut))
-  }, c(1, 3))
-})
-
-test_that("Check user defined cut points in random order",{
-  expect_equal({
-    temp <- TreeScan(diagnoses,
-                     exposure = case,
-                     leafs = diag,
-                     id = id,
-                     cut_positions = c(3, 1, 4),
-                     random_seed = 1234,
-                     n_monte_carlo_sim = 20,
-                     future_control = list("multisession", workers = 2))
-
-    unique(nchar(temp$cut))
-  }, c(1, 3, 4))
-})
-
-test_that("Defining cuts longer than max(nchar(leaf)) causes an error",{
+test_that("Test that all leafs are included on your tree",{
   expect_error({
-    TreeScan(diagnoses,
-             exposure = case,
-             leafs = diag,
-             id = id,
-             cut_positions = c(3, 1, 5),
-             random_seed = 1234,
-             n_monte_carlo_sim = 20,
-             future_control = list("multisession", workers = 2))
-  }, regexp = "Your cut position\\(s\\) 5")
+    TreeScan(count = data.frame(leaf = "KLM", n1 = 5, n0 = 2),
+             tree  = icd_10_se,
+             p = 1/2,
+             n_monte_carlo_sim = 10,
+             random_seed = 1234)
+  }, regexp = "The following leafs are not included on your tree: KLM")
 })
 
+test_that("Test no clumn called leaf exisits in tree",{
+  expect_error({
+    TreeScan(count = data.frame(leaf = "KLM", n1 = 5, n0 = 2),
+             tree  = data.frame(leaf = "KLM", pathString = "1/KLM"),
+             p = 1/2,
+             n_monte_carlo_sim = 10,
+             random_seed = 1234)
+  }, regexp = "includes a column named `leaf`, which is reserved by TreeScan.")
+})
 
+test_that("Test no clumn pathString exisits in tree",{
+  expect_error({
+    TreeScan(count = data.frame(leaf = "KLM", n1 = 5, n0 = 2),
+             tree  = data.frame(path = "1/KLM"),
+             p = 1/2,
+             n_monte_carlo_sim = 10,
+             random_seed = 1234)
+  }, regexp = "Could not find column `pathString` in `tree`")
+})
 
+test_that("Test no clumn pathString exisits in tree",{
+  expect_error({
+    TreeScan(count = data.frame(leaf = "KLM", n1 = 5, n0 = 2),
+             tree  = data.frame(pathString = "1-KLM"),
+             p = 1/2,
+             n_monte_carlo_sim = 10,
+             random_seed = 1234)
+  }, regexp = "I could not any match for / in `pathString`.")
+})
