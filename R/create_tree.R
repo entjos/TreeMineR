@@ -1,18 +1,21 @@
 #' Creating a tree file for further use in TreeScan
 #'
 #' @param x A data frame that includes two columns:
-#'    \describe{
+#'    \itemize{
 #'      \item{node}
 #'      \item{parent}
-#'    }
+#'      }
 #'
 #' @import data.table
 #' @export create_tree
 
 create_tree <- function(x){
 
+  # Declare variables used in data.table for R CMD check
+  pathString <- parent <- NULL
+
   # Check input
-  if(any(icd_10_codes$node == "", icd_10_codes$parent == "", na.rm = TRUE)){
+  if(any(x[["node"]] == "", x[["parent"]] == "", na.rm = TRUE)){
     cli::cli_abort(
       c(
         "{.var node} and/or {.var parent} include empty cells",

@@ -8,10 +8,10 @@ create_tree(x)
 }
 \arguments{
 \item{x}{A data frame that includes two columns:
-\describe{
+\itemize{
   \item{node}
   \item{parent}
-}}
+  }}
 }
 \description{
 Creating a tree file for further use in TreeScan
