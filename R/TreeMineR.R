@@ -116,30 +116,7 @@ TreeMineR <- function(data,
 
   # Get cuts -------------------------------------------------------------------
 
-  tree$leaf <- gsub(paste0(".*(?<=", delimiter, ")(.*)"), "\\1",
-                    tree[["pathString"]],
-                    perl = TRUE)
-
-  if(any(!(data$leaf %in% tree$leaf))) {
-    cli::cli_abort(
-      c(
-        "x" = "The following leafs are not included on your tree:
-        {(data$leaf[!(data$leaf %in% tree$leaf)])}",
-        "i" = "All leafs must be included in your tree."
-      )
-    )
-  }
-
-  comb <- merge(data,
-                tree,
-                by = "leaf",
-                all.x = TRUE)
-
-  comb[, cut := strsplit(pathString, delimiter, fixed = TRUE)]
-  comb <- comb[, list(cut = unlist(cut)), list(id, exposed)]
-  comb <- unique(comb, by = c("id", "cut"))
-  comb <- comb[, list(n0 = sum(exposed == 0), n1 = sum(exposed == 1)),
-               by = cut]
+  comb <- cut_the_tree(data, tree, delimiter)
 
   # Run tree based scan statistic ----------------------------------------------
 
