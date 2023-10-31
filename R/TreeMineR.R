@@ -50,22 +50,22 @@
 #'  time. The default is a sequential run of the Monte-Carlo simulations.
 #'
 #' @examples
-#' TreeScan(count = diagnoses,
-#'          tree  = icd_10_se,
-#'          p = 1/2,
-#'          n_monte_carlo_sim = 10,
-#'          random_seed = 1234)
+#' TreeMineR(count = diagnoses,
+#'           tree  = icd_10_se,
+#'           p = 1/2,
+#'           n_monte_carlo_sim = 10,
+#'           random_seed = 1234)
 #'
 #' @import data.table
-#' @export TreeScan
+#' @export TreeMineR
 
-TreeScan <- function(counts,
-                     tree,
-                     delimiter = "/",
-                     p,
-                     n_monte_carlo_sim = 9999,
-                     random_seed = FALSE,
-                     future_control = list(strategy = "sequential")){
+TreeMineR <- function(counts,
+                      tree,
+                      delimiter = "/",
+                      p,
+                      n_monte_carlo_sim = 9999,
+                      random_seed = FALSE,
+                      future_control = list(strategy = "sequential")){
 
   # Declare variables used in data.table for R CMD check
   n1 <- n0 <- n <- llr <- iteration <- pathString <- ..p <- NULL
@@ -76,7 +76,7 @@ TreeScan <- function(counts,
     cli::cli_abort(
       c(
         "x" = "`tree` includes a column named `leaf`, which is reserved by
-        TreeScan.",
+        TreeMineR",
         "i" = "Please replace `leaf` with another name."
       )
     )
@@ -95,7 +95,7 @@ TreeScan <- function(counts,
     cli::cli_abort(
       c(
         "x" = "I could not any match for {delimiter} in `pathString`.",
-        "Are you sure you defined the right delimiter in your `TreeScan` call?"
+        "Are you sure you defined the right delimiter in your `TreeMineR` call?"
       )
     )
   }

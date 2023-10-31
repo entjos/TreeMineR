@@ -31,7 +31,7 @@ diagnoses <- diagnoses[diagnoses$diag %in% gsub(paste0(".*(?<=\\/)(.*)"), "\\1",
 
 colnames(diagnoses) <- c("id", "leaf", "case")
 
-diagnoses<- diagnoses[, .(n0 = sum(case == 0),
+diagnoses <- diagnoses[, .(n0 = sum(case == 0),
                           n1 = sum(case == 1)),
                       by = leaf]
 
