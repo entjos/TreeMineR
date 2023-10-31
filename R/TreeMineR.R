@@ -135,7 +135,7 @@ TreeMineR <- function(data,
                 by = "leaf",
                 all.x = TRUE)
 
-  comb[, cut := strsplit(pathString, "/", fixed = TRUE)]
+  comb[, cut := strsplit(pathString, delimiter, fixed = TRUE)]
   comb <- comb[, list(cut = unlist(cut)), list(id, exposed)]
   comb <- unique(comb, by = c("id", "cut"))
   comb <- comb[, list(n0 = sum(exposed == 0), n1 = sum(exposed == 1)),
