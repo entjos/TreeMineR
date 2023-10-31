@@ -14,6 +14,9 @@ create_tree <- function(x){
   # Declare variables used in data.table for R CMD check
   pathString <- parent <- NULL
 
+  # Convert x to data.table
+  x <- data.table::as.data.table(x)
+
   # Check input
   if(any(x[["node"]] == "", x[["parent"]] == "", na.rm = TRUE)){
     cli::cli_abort(
@@ -50,7 +53,7 @@ create_tree <- function(x){
   }
 
   # Cleaning up for outputting
-  data.table::setcolorder(out, c("node.y", colnames(out)[-ncol(out)]))
+  data.table::setcolorder(out, c(ncol(out), seq_len(ncol(out) -1)))
   out[, parent := NULL]
 
   # Create pathString that can be used for defining cuts
