@@ -14,25 +14,21 @@
 #' @keywords data
 set.seed(1)
 
-comp <- data.table::data.table(id = rep(1:10000, rbinom(10000, 10, 0.2)))
-comp$diag <- comorbidity::sample_diag(n = nrow(comp))
-comp$case <- 0
+unexposed <- data.table::data.table(id = rep(1:10000, rbinom(10000, 10, 0.2)))
+unexposed$diag <- comorbidity::sample_diag(n = nrow(unexposed))
+unexposed$exposed <- 0
 
-cases <- data.table::data.table(id = rep(1:1000, rbinom(1000, 10, 0.3)))
-cases$diag <- comorbidity::sample_diag(n = nrow(cases))
-cases$case <- 1
+exposed <- data.table::data.table(id = rep(1:1000, rbinom(1000, 10, 0.3)))
+exposed$diag <- comorbidity::sample_diag(n = nrow(exposed))
+exposed$exposed <- 1
 
-diagnoses <- rbind(comp, cases)
+diagnoses <- rbind(unexposed, exposed)
 
 # Remove codes that are not included on in the ICD-10-SE
 diagnoses <- diagnoses[diagnoses$diag %in% gsub(paste0(".*(?<=\\/)(.*)"), "\\1",
                                                 icd_10_se$pathString,
                                                 perl = TRUE), ]
 
-colnames(diagnoses) <- c("id", "leaf", "case")
-
-diagnoses <- diagnoses[, .(n0 = sum(case == 0),
-                          n1 = sum(case == 1)),
-                      by = leaf]
+colnames(diagnoses) <- c("id", "leaf", "exposed")
 
 usethis::use_data(diagnoses, overwrite = TRUE)
