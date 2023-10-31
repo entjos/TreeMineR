@@ -8,7 +8,7 @@ TreeMineR(
   data,
   tree,
   delimiter = "/",
-  p,
+  p = NULL,
   n_monte_carlo_sim = 9999,
   random_seed = FALSE,
   future_control = list(strategy = "sequential")
@@ -48,7 +48,7 @@ that you would like to use. This dataset can, e.g., be created using
 `pathString`. The default is `/`.}
 
 \item{p}{The proportion of exposed individuals in the dataset. The default is the
-proportion of exposed individuals among unique individuals in `data`.}
+proportion of exposed individuals among unique individuals in `data`}
 
 \item{n_monte_carlo_sim}{The number of Monte-Carlo simulations to be used for calculating P-values.}
 

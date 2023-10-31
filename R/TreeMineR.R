@@ -74,10 +74,14 @@ TreeMineR <- function(data,
   data <- data.table::copy(data)
   data.table::setDT(data)
 
+  n_exposed   <- unique(data, by = as.character("id"))[exposed == 1, .N]
+  n_unexposed <- unique(data, by = as.character("id"))[exposed == 0, .N]
+
   # Assign default values if not specified -------------------------------------
 
   if(is.null(p)) {
-    p <- unique(data, by = as.character(id))[, sum(exposed = 1) / .N]
+    p <- n_exposed / (n_exposed + n_unexposed)
+    cli::cli_inform(c("i" = "p is set to {round(p, 5)}."))
   }
 
   # Check user input -----------------------------------------------------------
@@ -85,9 +89,9 @@ TreeMineR <- function(data,
   if("leaf" %in% colnames(tree)) {
     cli::cli_abort(
       c(
-        "x" = "`tree` includes a column named `leaf`, which is reserved by
-        TreeMineR",
-        "i" = "Please replace `leaf` with another name."
+        "x" = "{.code tree} includes a column named {.code leaf}, which
+        is reserved by TreeMineR",
+        "i" = "Please replace {.code leaf} with another name."
       )
     )
   }
@@ -95,8 +99,8 @@ TreeMineR <- function(data,
   if(!("pathString" %in% colnames(tree))) {
     cli::cli_abort(
       c(
-        "x" = "Could not find column `pathString` in `tree`",
-        "i" = "Please add pathString column to `tree`"
+        "x" = "Could not find column {.code pathString} in {.code tree}",
+        "i" = "Please add pathString column to {.code tree}`"
       )
     )
   }
@@ -104,8 +108,8 @@ TreeMineR <- function(data,
   if(!any(grepl(delimiter, tree$pathString, fixed = TRUE))){
     cli::cli_abort(
       c(
-        "x" = "I could not any match for {delimiter} in `pathString`.",
-        "Are you sure you defined the right delimiter in your `TreeMineR` call?"
+        "x" = "I could not any match for {delimiter} in {.code pathString}.",
+        "Are you sure you defined the right delimiter in your TreeMineR call?"
       )
     )
   }
@@ -170,12 +174,21 @@ TreeMineR <- function(data,
   temp <- temp[iteration == 1 & !is.nan(llr)]
   temp[, rank := mapply(\(x) sum(test_distribution$max_llr > x) + 1, llr)]
 
+  # Add risks and risk rations -------------------------------------------------
+
+  temp[, risk1 := n1/..n_exposed]
+  temp[, risk0 := n0/..n_unexposed]
+  temp[, RR    := risk1/risk0]
+
   # Prepare output -------------------------------------------------------------
 
   temp[order(llr, decreasing = TRUE),
        list(cut,
             n1,
             n0,
+            risk1,
+            risk0,
+            RR,
             llr,
             p = as.numeric(rank)/(n_monte_carlo_sim + 1))]
 
