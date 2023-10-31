@@ -5,7 +5,7 @@
 \title{Tree scan statistics for R}
 \usage{
 TreeMineR(
-  counts,
+  data,
   tree,
   delimiter = "/",
   p,
@@ -15,29 +15,29 @@ TreeMineR(
 )
 }
 \arguments{
-\item{counts}{A data set including the number of events among exposed and unexposed for
- each lead. The dataset needs to include the following columns:
- \itemize{
-   \item{`leaf`}{The code defining the leaf.}
-   \item{`n0`}{The number of events within the leaf among the unexposed.}
-   \item{`n1`}{The number of events within the leaf among the exposed.}
-   }
+\item{data}{The dataset used for the computation. The dataset needs to include the
+   following columns:
 
+   \describe{
+   \item{`id`}{An integer that is unique to every individual.}
+   \item{`leaf`}{A string identifying the unique diagnoses or leafs for each individual.}
+   \item{`exposed`}{A 0/1 indicator of the individual's exposure status.}
+   }
    See below for the first and last rows included in the example dataset.
 
    ```
-   leaf n0 n1
-   1: K251  1  0
-   2: Q702  5  0
-   3:  G96  3  0
-   4: S949  2  0
-   5: S951  2  0
-   ---
-   9492: T118  0  1
-   9493: A932  0  1
-   9494: D350  0  1
-   9495: L410  0  1
-   9496: T524  0  1
+      id leaf exposed
+       1 K251       0
+       2 Q702       0
+       3  G96       0
+       3 S949       0
+       4 S951       0
+    ---
+     999 V539       1
+     999 V625       1
+     999 G823       1
+    1000  L42       1
+    1000 T524       1
    ```}
 
 \item{tree}{A dataset with one variable `pathString` defining the tree structure
@@ -62,10 +62,10 @@ time. The default is a sequential run of the Monte-Carlo simulations.}
 Tree scan statistics for R
 }
 \examples{
-TreeMineR(count = diagnoses,
+TreeMineR(data = diagnoses,
           tree  = icd_10_se,
-          p = 1/2,
-          n_monte_carlo_sim = 10,
+          p = 1/11,
+          n_monte_carlo_sim = 99,
           random_seed = 1234)
 
 }
