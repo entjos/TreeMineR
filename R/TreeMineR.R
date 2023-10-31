@@ -37,7 +37,7 @@
 #'
 #' @param p
 #'  The proportion of exposed individuals in the dataset. The default is the
-#'  proportion of exposed individuals among unique individuals in `data`.
+#'  proportion of exposed individuals among unique individuals in `data`
 #'
 #' @param n_monte_carlo_sim
 #'  The number of Monte-Carlo simulations to be used for calculating P-values.
@@ -62,13 +62,23 @@
 TreeMineR <- function(data,
                       tree,
                       delimiter = "/",
-                      p,
+                      p = NULL,
                       n_monte_carlo_sim = 9999,
                       random_seed = FALSE,
                       future_control = list(strategy = "sequential")){
 
   # Declare variables used in data.table for R CMD check
   n1 <- n0 <- n <- llr <- iteration <- pathString <- ..p <- NULL
+
+  # Convert data to data.table
+  data <- data.table::copy(data)
+  data.table::setDT(data)
+
+  # Assign default values if not specified -------------------------------------
+
+  if(is.null(p)) {
+    p <- unique(data, by = as.character(id))[, sum(exposed = 1) / .N]
+  }
 
   # Check user input -----------------------------------------------------------
 
