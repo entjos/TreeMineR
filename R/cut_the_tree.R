@@ -21,6 +21,9 @@ cut_the_tree <- function(data,
                          tree,
                          delimiter){
 
+  # Declare variables used in data.table for R CMD check
+  pathString <- id <- exposed <- NULL
+
   # Extract leafs from pathString
   tree$leaf <- gsub(paste0(".*(?<=", delimiter, ")(.*)"), "\\1",
                     tree[["pathString"]],

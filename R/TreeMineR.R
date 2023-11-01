@@ -69,6 +69,7 @@ TreeMineR <- function(data,
 
   # Declare variables used in data.table for R CMD check
   n1 <- n0 <- n <- llr <- iteration <- pathString <- ..p <- NULL
+  risk1 <- risk0 <- RR <- ..n_exposed <- ..n_unexposed <- exposed <- NULL
 
   # Convert data to data.table
   data <- data.table::copy(data)
