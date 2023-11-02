@@ -1,12 +1,19 @@
 Package: TreeMineR
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Tree-Based Scan Statistics for R
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: CC BY 4.0
+Authors@R: c(person(given = "Joshua P.",
+                    family = "Entrop",
+           	        role = c("aut", "cre", "cph"),
+           	        email = "joshuaentrop@posteo.de",
+           	        comment = c(ORCID = "0000-0003-1614-8096")),
+           	 person(given = "Viktor",
+           	        family = "Wintzell",
+           	        role = "aut",
+           	        email = "viktor.wintzell@ki.se"))
+Description: Tree-based scan statistics are a explorative method to identify
+             event clusters across the space of a hirachical tree.
+License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
 Depends: 
