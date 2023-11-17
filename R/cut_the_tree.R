@@ -57,6 +57,6 @@ cut_the_tree <- function(data,
 
   # Calculate number of exposed and unexposed within each cut
   temp[, list(n0 = sum(exposed == 0), n1 = sum(exposed == 1)),
-       by = cut]
+       by = "cut"]
 
 }
