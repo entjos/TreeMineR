@@ -15,9 +15,9 @@ test_that("Check return tree does not include any removed elements",{
                       return_removed = TRUE)
 
 
-    any(temp$removed$`B35-B49` %in% temp$tree)
+    any(temp$removed$`B35-B49` %in% temp$tree$pathString)
 
-  }, 7)
+  })
 })
 
 test_that("Error when pathSting not found",{

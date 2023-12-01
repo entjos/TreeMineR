@@ -77,7 +77,7 @@ drop_cuts <- function(tree, cuts, delimiter = "/", return_removed = FALSE){
 
     }
 
-    pathString <<- pathString
+    pathString <<- temp
 
     if(return_removed){
 
