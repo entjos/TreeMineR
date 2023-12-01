@@ -34,7 +34,7 @@ cut_the_tree <- function(data,
     cli::cli_abort(
       c(
         "x" = "The following leafs are not included on your tree:
-        {(data$leaf[!(data$leaf %in% tree$leaf)])}",
+        {unique((data$leaf[!(data$leaf %in% tree$leaf)]))}",
         "i" = "All leafs must be included in your tree."
       )
     )

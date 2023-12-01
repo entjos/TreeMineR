@@ -23,7 +23,9 @@ test_that("Check parallel test run", {
 
 test_that("Test that all leafs are included on your tree",{
   expect_error({
-    TreeMineR(data = data.frame(id = 1, leaf = "KLM", exposed = 0),
+    TreeMineR(data = data.frame(id = 1,
+                                leaf = c("KLM", "KLM"),
+                                         exposed = 0),
               tree  = icd_10_se,
               p = 1/11,
               n_monte_carlo_sim = 10,
