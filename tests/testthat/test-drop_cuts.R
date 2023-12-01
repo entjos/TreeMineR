@@ -8,6 +8,18 @@ test_that("Removing specific cuts from a tree",{
   }, 7)
 })
 
+test_that("Check return tree does not include any removed elements",{
+  expect_false({
+    temp <- drop_cuts(tree = icd_10_se,
+                      cuts = c("B35-B49", "F41"),
+                      return_removed = TRUE)
+
+
+    any(temp$removed$`B35-B49` %in% temp$tree)
+
+  }, 7)
+})
+
 test_that("Error when pathSting not found",{
   expect_error({
     drop_cuts(tree = data.frame(string = c("01/B35-B49/B46/B468",
