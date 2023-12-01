@@ -2,4 +2,5 @@
 
 export(TreeMineR)
 export(create_tree)
+export(drop_cuts)
 import(data.table)
