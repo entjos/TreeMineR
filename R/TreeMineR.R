@@ -174,15 +174,14 @@ TreeMineR <- function(data,
 
   # Prepare output -------------------------------------------------------------
 
-  out <- temp[order(llr, decreasing = TRUE),
-              list(cut,
-                   n1,
-                   n0,
-                   risk1,
-                   risk0,
-                   RR,
-                   llr,
-                   p = as.numeric(rank)/(n_monte_carlo_sim + 1))]
+  out <- temp[, list(cut,
+                     n1,
+                     n0,
+                     risk1,
+                     risk0,
+                     RR,
+                     llr,
+                     p = as.numeric(rank)/(n_monte_carlo_sim + 1))]
 
   if(!is.null(dictionary)){
 
@@ -194,10 +193,12 @@ TreeMineR <- function(data,
 
     data.table::setcolorder(out, c("title", "cut"))
 
+    out[order(llr, decreasing = TRUE)]
+
   } else {
 
     # Return
-    out
+    out[order(llr, decreasing = TRUE)]
 
   }
 
