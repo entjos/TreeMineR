@@ -187,10 +187,12 @@ TreeMineR <- function(data,
   if(!is.null(dictionary)){
 
     # Return
-    merge(dictionary,
-          out,
-          by.x = "node",
-          by.y = "cut")
+    out <- merge(out,
+                 dictionary,
+                 by.x = "cut",
+                 by.y = "node")
+
+    data.table::setcolorder(out, c("title", "cut"))
 
   } else {
 
