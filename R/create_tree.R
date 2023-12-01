@@ -1,9 +1,10 @@
 #' Creating a tree file for further use in TreeScan
 #'
-#' @param x A data frame that includes two columns:
-#'    \itemize{
-#'      \item{node}
-#'      \item{parent}
+#' @param x A data frame that includes two or three columns:
+#'    \describe{
+#'      \item{`title`}{Optional: The name of the node}
+#'      \item{`node`}{Obligatory: A string defining a node}
+#'      \item{`parent`}{Obligatory: A string defining the partent of the node}
 #'      }
 #'
 #' @import data.table
@@ -12,7 +13,7 @@
 create_tree <- function(x){
 
   # Declare variables used in data.table for R CMD check
-  pathString <- parent <- NULL
+  pathString <- parent <- dictionary <- NULL
 
   # Convert x to data.table
   x <- data.table::as.data.table(x)
@@ -25,6 +26,13 @@ create_tree <- function(x){
         " " = "Please replace all empty cells with NAs."
       )
     )
+  }
+
+  if("title" %in% colnames(x)){
+
+    dictionary <- x[, list(title, node)]
+    x[, title := NULL]
+
   }
 
   # Do first merge of node and parents
@@ -61,6 +69,20 @@ create_tree <- function(x){
       .SDcols = rev(colnames(out))]
   out[, pathString := gsub(".*\\/?NA\\/", "", pathString)]
 
-  # Return out
-  as.data.frame(out[, "pathString"])
+  # Prepare output
+  out <- as.data.frame(out[, "pathString"])
+
+  if(!is.null(dictionary)){
+
+    attr(out, "dictionary") <- as.data.frame(dictionary)
+
+    # Return out
+    out
+
+  } else {
+
+    # Return out
+    out
+
+    }
 }

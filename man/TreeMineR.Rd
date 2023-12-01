@@ -11,6 +11,7 @@ TreeMineR(
   p = NULL,
   n_monte_carlo_sim = 9999,
   random_seed = FALSE,
+  use_dictionary = FALSE,
   future_control = list(strategy = "sequential")
 )
 }
@@ -53,6 +54,9 @@ proportion of exposed individuals among unique individuals in `data`}
 \item{n_monte_carlo_sim}{The number of Monte-Carlo simulations to be used for calculating P-values.}
 
 \item{random_seed}{Random seed used for the Monte-Carlo simulations.}
+
+\item{use_dictionary}{Logical indicator whether to use the dictionary to label the cuts. This
+option requieres that tree has a `dictionary` argument.}
 
 \item{future_control}{A list of arguments passed `future::plan`. This is useful if one would like
 to parallelise the Monte-Carlo simulations to decrease the computation

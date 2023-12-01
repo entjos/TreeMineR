@@ -44,6 +44,10 @@
 #'
 #' @param random_seed Random seed used for the Monte-Carlo simulations.
 #'
+#' @param use_dictionary
+#'   Logical indicator whether to use the dictionary to label the cuts. This
+#'   option requieres that tree has a `dictionary` argument.
+#'
 #' @param future_control
 #'  A list of arguments passed `future::plan`. This is useful if one would like
 #'  to parallelise the Monte-Carlo simulations to decrease the computation
@@ -65,6 +69,7 @@ TreeMineR <- function(data,
                       p = NULL,
                       n_monte_carlo_sim = 9999,
                       random_seed = FALSE,
+                      use_dictionary = FALSE,
                       future_control = list(strategy = "sequential")){
 
   # Declare variables used in data.table for R CMD check
@@ -115,6 +120,15 @@ TreeMineR <- function(data,
     )
   }
 
+  if(use_dictionary & !("dictionary" %in% names(attributes(tree)))){
+    cli::cli_abort(
+      c(
+        "x" = "I could not find your dictionary.",
+        "Please make sure that your tree has a {.code ditionary} attribute?"
+      )
+    )
+  }
+
   # Get cuts -------------------------------------------------------------------
 
   comb <- cut_the_tree(data, tree, delimiter)
@@ -160,14 +174,29 @@ TreeMineR <- function(data,
 
   # Prepare output -------------------------------------------------------------
 
-  temp[order(llr, decreasing = TRUE),
-       list(cut,
-            n1,
-            n0,
-            risk1,
-            risk0,
-            RR,
-            llr,
-            p = as.numeric(rank)/(n_monte_carlo_sim + 1))]
+  out <- temp[order(llr, decreasing = TRUE),
+              list(cut,
+                   n1,
+                   n0,
+                   risk1,
+                   risk0,
+                   RR,
+                   llr,
+                   p = as.numeric(rank)/(n_monte_carlo_sim + 1))]
+
+  if(use_dictionary){
+
+    # Return
+    merge(attr(tree, "dictionary"),
+          out,
+          by.x = "node",
+          by.y = "cut")
+
+  } else {
+
+    # Return
+    out
+
+  }
 
 }

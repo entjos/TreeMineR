@@ -6,7 +6,8 @@ icd_10_codes <- icd_10_se <- data.table::fread(
          "klassifikationer-och-koder/icd-10-se.tsv")
 )
 
-icd_10_codes <- icd_10_codes[, .(node   = Kod,
+icd_10_codes <- icd_10_codes[, .(title  = Titel,
+                                 node   = Kod,
                                  parent = `Överordnad kod`)]
 icd_10_codes[icd_10_codes == ""] <- NA
 icd_10_codes <- tidyr::fill(icd_10_codes, parent, .direction = "down")

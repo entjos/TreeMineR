@@ -8,12 +8,13 @@
 data(icd_10_se)
 }
 \description{
-A dataset including the following columns:
-\itemize{
+A dataset including the following column:
+\describe{
    \item{`pathString`}{A string identifying all the parents of a node. Each
    parent is separated by a `/`.}
-   \item{`child`}{The child node of the `stringPath`.}
-   \item{`parent<i>`}{The ith parent of the `child`.}
 }
+}
+\details{
+and an `dictionary` attribute.
 }
 \keyword{datasets}
