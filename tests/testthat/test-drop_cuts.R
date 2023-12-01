@@ -20,6 +20,16 @@ test_that("Check return tree does not include any removed elements",{
   })
 })
 
+test_that("Check return_removed = FALSE",{
+  expect_snapshot({
+    drop_cuts(tree = icd_10_se,
+              cuts = c("B35-B49", "F41"),
+              return_removed = FALSE) |>
+      head()
+
+  })
+})
+
 test_that("Error when pathSting not found",{
   expect_error({
     drop_cuts(tree = data.frame(string = c("01/B35-B49/B46/B468",
@@ -29,7 +39,7 @@ test_that("Error when pathSting not found",{
   }, "Could not find column `pathString` in `tree`")
 })
 
-test_that("Error when pathSting not found",{
+test_that("Error when wrong delimiter is used",{
   expect_error({
     drop_cuts(tree = icd_10_se,
               cuts = c("B35-B49", "F41"),
