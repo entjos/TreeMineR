@@ -9,9 +9,8 @@ create_tree(x)
 \arguments{
 \item{x}{A data frame that includes two or three columns:
 \describe{
-  \item{`title`}{Optional: The name of the node}
-  \item{`node`}{Obligatory: A string defining a node}
-  \item{`parent`}{Obligatory: A string defining the partent of the node}
+  \item{`node`}{OA string defining a node}
+  \item{`parent`}{A string defining the partent of the node}
   }}
 }
 \description{

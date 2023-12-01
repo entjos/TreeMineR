@@ -1,7 +1,7 @@
 # Check sequential test run
 
     Code
-      head(TreeMineR(data = diagnoses, tree = icd_10_se, p = 1 / 11, use_dictionary = FALSE,
+      head(TreeMineR(data = diagnoses, tree = icd_10_se, p = 1 / 11,
       n_monte_carlo_sim = 10, random_seed = 1234), 10)
     Output
               cut  n1   n0     risk1      risk0       RR       llr          p
@@ -19,7 +19,7 @@
 # Check parallel test run
 
     Code
-      head(TreeMineR(data = diagnoses, tree = icd_10_se, p = 1 / 11, use_dictionary = FALSE,
+      head(TreeMineR(data = diagnoses, tree = icd_10_se, p = 1 / 11,
       n_monte_carlo_sim = 20, random_seed = 124, future_control = list("multisession",
         workers = 2)), 10)
     Output
@@ -38,49 +38,48 @@
 # Test the use of titles
 
     Code
-      head(TreeMineR(data = diagnoses, tree = icd_10_se, p = 1 / 11, use_dictionary = TRUE,
+      head(TreeMineR(data = diagnoses, tree = icd_10_se, p = 1 / 11, dictionary = icd_10_se_dict,
       n_monte_carlo_sim = 20, random_seed = 124), 10)
     Output
-         node
-      1    01
-      2    02
-      3    03
-      4    04
-      5    05
-      6    06
-      7    07
-      8    08
-      9    09
-      10   10
-                                                                                           title
-      1                                 Vissa infektionssjukdomar och parasitsjukdomar (A00-B99)
-      2                                                                        Tumörer (C00-D48)
-      3  Sjukdomar i blod och blodbildande organ samt vissa rubbningar i immunsystemet (D50-D89)
-      4        Endokrina sjukdomar, nutritionsrubbningar och ämnesomsättningssjukdomar (E00-E90)
-      5                         Psykiska sjukdomar och syndrom samt beteendestörningar (F00-F99)
-      6                                                       Sjukdomar i nervsystemet (G00-G99)
-      7                                         Sjukdomar i ögat och närliggande organ (H00-H59)
-      8                                          Sjukdomar i örat och mastoidutskottet (H60-H95)
-      9                                                 Cirkulationsorganens sjukdomar (I00-I99)
-      10                                                    Andningsorganens sjukdomar (J00-J99)
-          n1   n0      risk1      risk0       RR        llr         p
-      1  207 1483 0.21362229 0.16728708 1.276980  9.2870063 0.0952381
-      2  207 1452 0.21362229 0.16379019 1.304244 10.4231090 0.0952381
-      3   49  360 0.05056760 0.04060914 1.245227  1.8956802 1.0000000
-      4  107  711 0.11042312 0.08020305 1.376795  7.0237236 0.2380952
-      5  114  747 0.11764706 0.08426396 1.396173  7.9647135 0.1428571
-      6   89  558 0.09184727 0.06294416 1.459186  7.4686450 0.1904762
-      7   60  419 0.06191950 0.04726452 1.310063  3.0926847 1.0000000
-      8   27  215 0.02786378 0.02425268 1.148895  0.5867027 1.0000000
-      9   98  626 0.10113519 0.07061478 1.432210  7.6290864 0.1904762
-      10  73  496 0.07533540 0.05595037 1.346468  4.3174359 1.0000000
+          node
+       1:   01
+       2:   02
+       3:   03
+       4:   04
+       5:   05
+       6:   06
+       7:   07
+       8:   08
+       9:   09
+      10:   10
+                                                                                            title
+       1:                                Vissa infektionssjukdomar och parasitsjukdomar (A00-B99)
+       2:                                                                       Tumörer (C00-D48)
+       3: Sjukdomar i blod och blodbildande organ samt vissa rubbningar i immunsystemet (D50-D89)
+       4:       Endokrina sjukdomar, nutritionsrubbningar och ämnesomsättningssjukdomar (E00-E90)
+       5:                        Psykiska sjukdomar och syndrom samt beteendestörningar (F00-F99)
+       6:                                                      Sjukdomar i nervsystemet (G00-G99)
+       7:                                        Sjukdomar i ögat och närliggande organ (H00-H59)
+       8:                                         Sjukdomar i örat och mastoidutskottet (H60-H95)
+       9:                                                Cirkulationsorganens sjukdomar (I00-I99)
+      10:                                                    Andningsorganens sjukdomar (J00-J99)
+           n1   n0      risk1      risk0       RR        llr         p
+       1: 207 1483 0.21362229 0.16728708 1.276980  9.2870063 0.0952381
+       2: 207 1452 0.21362229 0.16379019 1.304244 10.4231090 0.0952381
+       3:  49  360 0.05056760 0.04060914 1.245227  1.8956802 1.0000000
+       4: 107  711 0.11042312 0.08020305 1.376795  7.0237236 0.2380952
+       5: 114  747 0.11764706 0.08426396 1.396173  7.9647135 0.1428571
+       6:  89  558 0.09184727 0.06294416 1.459186  7.4686450 0.1904762
+       7:  60  419 0.06191950 0.04726452 1.310063  3.0926847 1.0000000
+       8:  27  215 0.02786378 0.02425268 1.148895  0.5867027 1.0000000
+       9:  98  626 0.10113519 0.07061478 1.432210  7.6290864 0.1904762
+      10:  73  496 0.07533540 0.05595037 1.346468  4.3174359 1.0000000
 
 # Test miss-specified delimiter
 
     Code
       TreeMineR(data = data.frame(id = 1:2, leaf = "KLM", exposed = 0:1), tree = data.frame(
-        pathString = "1/KLM"), n_monte_carlo_sim = 10, use_dictionary = FALSE,
-      random_seed = 1234)
+        pathString = "1/KLM"), n_monte_carlo_sim = 10, random_seed = 1234)
     Message
       i p is set to 0.5.
     Condition

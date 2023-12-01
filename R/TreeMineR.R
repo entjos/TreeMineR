@@ -44,9 +44,9 @@
 #'
 #' @param random_seed Random seed used for the Monte-Carlo simulations.
 #'
-#' @param use_dictionary
-#'   Logical indicator whether to use the dictionary to label the cuts. This
-#'   option requieres that tree has a `dictionary` argument.
+#' @param dictionary
+#'   A data.frame that includes one `node` column and a `title` column,
+#'   which are used for labeling the cuts in the output of `TreeMineR`.
 #'
 #' @param future_control
 #'  A list of arguments passed `future::plan`. This is useful if one would like
@@ -65,11 +65,11 @@
 
 TreeMineR <- function(data,
                       tree,
+                      dictionary = NULL,
                       delimiter = "/",
                       p = NULL,
                       n_monte_carlo_sim = 9999,
                       random_seed = FALSE,
-                      use_dictionary = FALSE,
                       future_control = list(strategy = "sequential")){
 
   # Declare variables used in data.table for R CMD check
@@ -120,11 +120,11 @@ TreeMineR <- function(data,
     )
   }
 
-  if(use_dictionary & !("dictionary" %in% names(attributes(tree)))){
+  if(!is.null(dictionary) & !all(c("title", "node") %in% colnames(dictionary))){
     cli::cli_abort(
       c(
-        "x" = "I could not find your dictionary.",
-        "Please make sure that your tree has a {.code ditionary} attribute?"
+        "x" = paste("I could not find your a {.code title} and/or {.code node}",
+                    "column in your dictionary.")
       )
     )
   }
@@ -184,10 +184,10 @@ TreeMineR <- function(data,
                    llr,
                    p = as.numeric(rank)/(n_monte_carlo_sim + 1))]
 
-  if(use_dictionary){
+  if(!is.null(dictionary)){
 
     # Return
-    merge(attr(tree, "dictionary"),
+    merge(dictionary,
           out,
           by.x = "node",
           by.y = "cut")

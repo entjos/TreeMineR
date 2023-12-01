@@ -3,7 +3,6 @@ test_that("Check sequential test run", {
     TreeMineR(data = diagnoses,
               tree  = icd_10_se,
               p = 1/11,
-              use_dictionary = FALSE,
               n_monte_carlo_sim = 10,
               random_seed = 1234) |>
       head(10)
@@ -15,7 +14,6 @@ test_that("Check parallel test run", {
     TreeMineR(data = diagnoses,
               tree  = icd_10_se,
               p = 1/11,
-              use_dictionary = FALSE,
               n_monte_carlo_sim = 20,
               random_seed = 124,
               future_control = list("multisession", workers = 2)) |>
@@ -28,25 +26,11 @@ test_that("Test the use of titles", {
     TreeMineR(data = diagnoses,
               tree  = icd_10_se,
               p = 1/11,
-              use_dictionary = TRUE,
+              dictionary = icd_10_se_dict,
               n_monte_carlo_sim = 20,
               random_seed = 124) |>
       head(10)
   })
-})
-
-test_that("Test the use of titles", {
-  expect_error({
-
-    attr(icd_10_se, "dictionary") <- NULL
-
-    TreeMineR(data = diagnoses,
-              tree  = icd_10_se,
-              p = 1/11,
-              use_dictionary = TRUE,
-              n_monte_carlo_sim = 20,
-              random_seed = 124)
-  }, "I could not find your dictionary.")
 })
 
 test_that("Test that all leafs are included on your tree",{
@@ -96,7 +80,6 @@ test_that("Test miss-specified delimiter",{
     TreeMineR(data = data.frame(id = 1:2, leaf = "KLM", exposed = 0:1),
               tree  = data.frame(pathString = "1/KLM"),
               n_monte_carlo_sim = 10,
-              use_dictionary = FALSE,
               random_seed = 1234)
   })
 })

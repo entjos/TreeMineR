@@ -14,7 +14,4 @@ A dataset including the following column:
    parent is separated by a `/`.}
 }
 }
-\details{
-and an `dictionary` attribute.
-}
 \keyword{datasets}

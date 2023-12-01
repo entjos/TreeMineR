@@ -6,8 +6,6 @@
 #'    parent is separated by a `/`.}
 #' }
 #'
-#' and an `dictionary` attribute.
-#'
 #' @docType data
 #' @keywords datasets
 #' @name icd_10_se

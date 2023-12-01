@@ -2,9 +2,8 @@
 #'
 #' @param x A data frame that includes two or three columns:
 #'    \describe{
-#'      \item{`title`}{Optional: The name of the node}
-#'      \item{`node`}{Obligatory: A string defining a node}
-#'      \item{`parent`}{Obligatory: A string defining the partent of the node}
+#'      \item{`node`}{OA string defining a node}
+#'      \item{`parent`}{A string defining the partent of the node}
 #'      }
 #'
 #' @import data.table
@@ -26,13 +25,6 @@ create_tree <- function(x){
         " " = "Please replace all empty cells with NAs."
       )
     )
-  }
-
-  if("title" %in% colnames(x)){
-
-    dictionary <- x[, list(title, node)]
-    x[, title := NULL]
-
   }
 
   # Do first merge of node and parents
@@ -69,20 +61,7 @@ create_tree <- function(x){
       .SDcols = rev(colnames(out))]
   out[, pathString := gsub(".*\\/?NA\\/", "", pathString)]
 
-  # Prepare output
-  out <- as.data.frame(out[, "pathString"])
+  # Return
+  as.data.frame(out[, "pathString"])
 
-  if(!is.null(dictionary)){
-
-    attr(out, "dictionary") <- as.data.frame(dictionary)
-
-    # Return out
-    out
-
-  } else {
-
-    # Return out
-    out
-
-    }
 }

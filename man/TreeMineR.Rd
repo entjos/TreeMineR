@@ -7,11 +7,11 @@
 TreeMineR(
   data,
   tree,
+  dictionary = NULL,
   delimiter = "/",
   p = NULL,
   n_monte_carlo_sim = 9999,
   random_seed = FALSE,
-  use_dictionary = FALSE,
   future_control = list(strategy = "sequential")
 )
 }
@@ -45,6 +45,9 @@ TreeMineR(
 that you would like to use. This dataset can, e.g., be created using
  \code{\link{create_tree}}.}
 
+\item{dictionary}{A data.frame that includes one `node` column and a `title` column,
+which are used for labeling the cuts in the output of `TreeMineR`.}
+
 \item{delimiter}{A character defining the delimiter of different tree levels within your
 `pathString`. The default is `/`.}
 
@@ -54,9 +57,6 @@ proportion of exposed individuals among unique individuals in `data`}
 \item{n_monte_carlo_sim}{The number of Monte-Carlo simulations to be used for calculating P-values.}
 
 \item{random_seed}{Random seed used for the Monte-Carlo simulations.}
-
-\item{use_dictionary}{Logical indicator whether to use the dictionary to label the cuts. This
-option requieres that tree has a `dictionary` argument.}
 
 \item{future_control}{A list of arguments passed `future::plan`. This is useful if one would like
 to parallelise the Monte-Carlo simulations to decrease the computation
