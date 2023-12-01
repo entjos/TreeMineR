@@ -60,7 +60,7 @@ test_that("Test miss-specified delimiter",{
               p = 1/11,
               n_monte_carlo_sim = 10,
               random_seed = 1234)
-  }, regexp = "I could not any match for / in `pathString`.")
+  }, regexp = "I could not find any match for / in `pathString`.")
 })
 
 test_that("Test miss-specified delimiter",{

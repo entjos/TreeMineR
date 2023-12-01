@@ -109,7 +109,7 @@ TreeMineR <- function(data,
   if(!any(grepl(delimiter, tree$pathString, fixed = TRUE))){
     cli::cli_abort(
       c(
-        "x" = "I could not any match for {delimiter} in {.code pathString}.",
+        "x" = "I could not find any match for {delimiter} in {.code pathString}.",
         "Are you sure you defined the right delimiter in your TreeMineR call?"
       )
     )
