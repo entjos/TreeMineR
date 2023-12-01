@@ -43,13 +43,13 @@
     Output
                                                                                             title
        1:                                Vissa infektionssjukdomar och parasitsjukdomar (A00-B99)
-       2:                                                                       Tumörer (C00-D48)
+       2:                                                                       Tumorer (C00-D48)
        3: Sjukdomar i blod och blodbildande organ samt vissa rubbningar i immunsystemet (D50-D89)
-       4:       Endokrina sjukdomar, nutritionsrubbningar och ämnesomsättningssjukdomar (E00-E90)
-       5:                        Psykiska sjukdomar och syndrom samt beteendestörningar (F00-F99)
+       4:       Endokrina sjukdomar, nutritionsrubbningar och amnesomsattningssjukdomar (E00-E90)
+       5:                        Psykiska sjukdomar och syndrom samt beteendestorningar (F00-F99)
        6:                                                      Sjukdomar i nervsystemet (G00-G99)
-       7:                                        Sjukdomar i ögat och närliggande organ (H00-H59)
-       8:                                         Sjukdomar i örat och mastoidutskottet (H60-H95)
+       7:                                        Sjukdomar i ogat och narliggande organ (H00-H59)
+       8:                                         Sjukdomar i orat och mastoidutskottet (H60-H95)
        9:                                                Cirkulationsorganens sjukdomar (I00-I99)
       10:                                                    Andningsorganens sjukdomar (J00-J99)
           cut  n1   n0      risk1      risk0       RR        llr         p
