@@ -32,7 +32,8 @@
 #'   \code{\link{create_tree}}.
 #'
 #' @param p
-#'  The proportion of exposed individuals in the dataset.
+#'  The proportion of exposed individuals in the dataset. Will be calculated
+#'  based on `n_exposed`, and `n_unexposed` if both are supplied.
 #'
 #' @param n_exposed Number of exposed individuals (Optional).
 #'
@@ -68,7 +69,7 @@
 
 TreeMineR <- function(data,
                       tree,
-                      p,
+                      p = NULL,
                       n_exposed   = NULL,
                       n_unexposed = NULL,
                       dictionary = NULL,
@@ -84,6 +85,17 @@ TreeMineR <- function(data,
   # Convert data to data.table
   data <- data.table::copy(data)
   data.table::setDT(data)
+
+  # Assign default values if not specified -------------------------------------
+
+  if(is.null(p) & all(!is.null(n_exposed), !is.null(n_unexposed))) {
+    p <- n_exposed / sum(n_exposed, n_unexposed)
+
+    cli::cli_inform(paste("Calculated {.code p} based on {.code n_exposed}",
+                          "and {.code n_exposed}.",
+                          "{.code p} is set to {round(p, 5)}."))
+
+  }
 
   # Check user input -----------------------------------------------------------
 

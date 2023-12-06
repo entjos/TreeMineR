@@ -7,7 +7,7 @@
 TreeMineR(
   data,
   tree,
-  p,
+  p = NULL,
   n_exposed = NULL,
   n_unexposed = NULL,
   dictionary = NULL,
@@ -47,7 +47,8 @@ TreeMineR(
 that you would like to use. This dataset can, e.g., be created using
  \code{\link{create_tree}}.}
 
-\item{p}{The proportion of exposed individuals in the dataset.}
+\item{p}{The proportion of exposed individuals in the dataset. Will be calculated
+based on `n_exposed`, and `n_unexposed` if both are supplied.}
 
 \item{n_exposed}{Number of exposed individuals (Optional).}
 
