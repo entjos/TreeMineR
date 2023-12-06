@@ -3,6 +3,8 @@ test_that("Check sequential test run", {
     TreeMineR(data = diagnoses,
               tree  = icd_10_se,
               p = 1/11,
+              n_exposed = 1000,
+              n_unexposed = 10000,
               n_monte_carlo_sim = 10,
               random_seed = 1234) |>
       head(10)
@@ -14,6 +16,8 @@ test_that("Check parallel test run", {
     TreeMineR(data = diagnoses,
               tree  = icd_10_se,
               p = 1/11,
+              n_exposed = 1000,
+              n_unexposed = 10000,
               n_monte_carlo_sim = 20,
               random_seed = 124,
               future_control = list("multisession", workers = 2)) |>
@@ -22,6 +26,20 @@ test_that("Check parallel test run", {
 })
 
 test_that("Test the use of titles", {
+  expect_snapshot({
+    TreeMineR(data = diagnoses,
+              tree  = icd_10_se,
+              p = 1/11,
+              n_exposed = 1000,
+              n_unexposed = 10000,
+              dictionary = icd_10_se_dict,
+              n_monte_carlo_sim = 20,
+              random_seed = 124) |>
+      head(10)
+  })
+})
+
+test_that("Test out put if no number of individuals is specified", {
   expect_snapshot({
     TreeMineR(data = diagnoses,
               tree  = icd_10_se,
@@ -75,13 +93,38 @@ test_that("Test miss-specified delimiter",{
   }, regexp = "I could not find any match for / in `pathString`.")
 })
 
-test_that("Test miss-specified delimiter",{
-  expect_snapshot({
-    TreeMineR(data = data.frame(id = 1:2, leaf = "KLM", exposed = 0:1),
+test_that("Test n_exposed or n_unexposed <= 0",{
+  expect_error({
+    TreeMineR(data = data.frame(id = 1, leaf = "KLM", exposed = 0),
               tree  = data.frame(pathString = "1/KLM"),
+              p = 1/11,
+              n_exposed = -1,
+              n_unexposed = 900,
               n_monte_carlo_sim = 10,
               random_seed = 1234)
-  })
+  }, regexp = "One of `n_exposed` and `n_unexposed` is less or equal to 0.")
 })
 
+test_that("Test n_exposed or n_unexposed <= 0",{
+  expect_error({
+    TreeMineR(data = data.frame(id = 1, leaf = "KLM", exposed = 0),
+              tree  = data.frame(pathString = "1/KLM"),
+              p = 1/11,
+              n_exposed = 900,
+              n_unexposed = 0,
+              n_monte_carlo_sim = 10,
+              random_seed = 1234)
+  }, regexp = "One of `n_exposed` and `n_unexposed` is less or equal to 0.")
+})
 
+test_that("Test n_exposed or n_unexposed <= 0",{
+  expect_error({
+    TreeMineR(data = data.frame(id = 1, leaf = "KLM", exposed = 0),
+              tree  = data.frame(pathString = "1/KLM"),
+              p = 1/11,
+              n_exposed = 0,
+              n_unexposed = 0,
+              n_monte_carlo_sim = 10,
+              random_seed = 1234)
+  }, regexp = "One of `n_exposed` and `n_unexposed` is less or equal to 0.")
+})

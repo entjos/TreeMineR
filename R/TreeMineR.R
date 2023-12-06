@@ -31,22 +31,25 @@
 #'  that you would like to use. This dataset can, e.g., be created using
 #'   \code{\link{create_tree}}.
 #'
+#' @param p
+#'  The proportion of exposed individuals in the dataset.
+#'
+#' @param n_exposed Number of exposed individuals (Optional).
+#'
+#' @param n_unexposed Number of unexposed individuals (Optional).
+#'
+#' @param dictionary
+#'   A data.frame that includes one `node` column and a `title` column,
+#'   which are used for labeling the cuts in the output of `TreeMineR`.
+#'
 #' @param delimiter
 #'  A character defining the delimiter of different tree levels within your
 #'  `pathString`. The default is `/`.
-#'
-#' @param p
-#'  The proportion of exposed individuals in the dataset. The default is the
-#'  proportion of exposed individuals among unique individuals in `data`
 #'
 #' @param n_monte_carlo_sim
 #'  The number of Monte-Carlo simulations to be used for calculating P-values.
 #'
 #' @param random_seed Random seed used for the Monte-Carlo simulations.
-#'
-#' @param dictionary
-#'   A data.frame that includes one `node` column and a `title` column,
-#'   which are used for labeling the cuts in the output of `TreeMineR`.
 #'
 #' @param future_control
 #'  A list of arguments passed `future::plan`. This is useful if one would like
@@ -65,9 +68,11 @@
 
 TreeMineR <- function(data,
                       tree,
+                      p,
+                      n_exposed   = NULL,
+                      n_unexposed = NULL,
                       dictionary = NULL,
                       delimiter = "/",
-                      p = NULL,
                       n_monte_carlo_sim = 9999,
                       random_seed = FALSE,
                       future_control = list(strategy = "sequential")){
@@ -79,16 +84,6 @@ TreeMineR <- function(data,
   # Convert data to data.table
   data <- data.table::copy(data)
   data.table::setDT(data)
-
-  n_exposed   <- data[exposed == 1, length(unique(id))]
-  n_unexposed <- data[exposed == 0, length(unique(id))]
-
-  # Assign default values if not specified -------------------------------------
-
-  if(is.null(p)) {
-    p <- n_exposed / (n_exposed + n_unexposed)
-    cli::cli_inform(c("i" = "p is set to {round(p, 5)}."))
-  }
 
   # Check user input -----------------------------------------------------------
 
@@ -129,6 +124,19 @@ TreeMineR <- function(data,
     )
   }
 
+  if(all(!is.null(n_exposed), !is.null(n_unexposed))){
+    if(any(n_exposed <= 0, n_unexposed <= 0)){
+      cli::cli_abort(
+        c(
+          "x" = paste("One of {.code n_exposed} and {.code n_unexposed} is",
+                      "less or equal to 0."),
+          "i" = paste("Both {.code n_exposed} and {.code n_unexposed}",
+                      "must be greater than 0.")
+        )
+      )
+    }
+  }
+
   # Get cuts -------------------------------------------------------------------
 
   comb <- cut_the_tree(data, tree, delimiter)
@@ -166,22 +174,34 @@ TreeMineR <- function(data,
   temp <- temp[iteration == 1 & !is.nan(llr)]
   temp[, rank := mapply(\(x) sum(test_distribution$max_llr > x) + 1, llr)]
 
-  # Add risks and risk rations -------------------------------------------------
-
-  temp[, risk1 := n1/..n_exposed]
-  temp[, risk0 := n0/..n_unexposed]
-  temp[, RR    := risk1/risk0]
-
   # Prepare output -------------------------------------------------------------
 
-  out <- temp[, list(cut,
-                     n1,
-                     n0,
-                     risk1,
-                     risk0,
-                     RR,
-                     llr,
-                     p = as.numeric(rank)/(n_monte_carlo_sim + 1))]
+  if(any(is.null(n_exposed), is.null(n_unexposed))){
+
+    out <- temp[, list(cut,
+                       n1,
+                       n0,
+                       llr,
+                       p = as.numeric(rank)/(n_monte_carlo_sim + 1))]
+
+  } else {
+
+    # Add risks and risk rations -------------------------------------------------
+
+    temp[, risk1 := n1/..n_exposed]
+    temp[, risk0 := n0/..n_unexposed]
+    temp[, RR    := risk1/risk0]
+
+    out <- temp[, list(cut,
+                       n1,
+                       n0,
+                       risk1,
+                       risk0,
+                       RR,
+                       llr,
+                       p = as.numeric(rank)/(n_monte_carlo_sim + 1))]
+
+  }
 
   if(!is.null(dictionary)){
 

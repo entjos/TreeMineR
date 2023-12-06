@@ -7,9 +7,11 @@
 TreeMineR(
   data,
   tree,
+  p,
+  n_exposed = NULL,
+  n_unexposed = NULL,
   dictionary = NULL,
   delimiter = "/",
-  p = NULL,
   n_monte_carlo_sim = 9999,
   random_seed = FALSE,
   future_control = list(strategy = "sequential")
@@ -45,14 +47,17 @@ TreeMineR(
 that you would like to use. This dataset can, e.g., be created using
  \code{\link{create_tree}}.}
 
+\item{p}{The proportion of exposed individuals in the dataset.}
+
+\item{n_exposed}{Number of exposed individuals (Optional).}
+
+\item{n_unexposed}{Number of unexposed individuals (Optional).}
+
 \item{dictionary}{A data.frame that includes one `node` column and a `title` column,
 which are used for labeling the cuts in the output of `TreeMineR`.}
 
 \item{delimiter}{A character defining the delimiter of different tree levels within your
 `pathString`. The default is `/`.}
-
-\item{p}{The proportion of exposed individuals in the dataset. The default is the
-proportion of exposed individuals among unique individuals in `data`}
 
 \item{n_monte_carlo_sim}{The number of Monte-Carlo simulations to be used for calculating P-values.}
 
