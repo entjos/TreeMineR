@@ -8,7 +8,7 @@ icd_10_codes <- icd_10_se <- data.table::fread(
 
 icd_10_codes <- icd_10_codes[, .(node   = Kod,
                                  parent = `Överordnad kod`)]
-icd_10_codes[icd_10_codes == ""] <- NA
+icd_10_codes[icd_10_codes == ""] <- "ICD-10-SE"
 icd_10_codes <- tidyr::fill(icd_10_codes, parent, .direction = "down")
 icd_10_codes <- unique(icd_10_codes, by = c("node", "parent"))
 icd_10_codes <- icd_10_codes[, lapply(.SD, function(x) gsub("\\.", "", x))]
