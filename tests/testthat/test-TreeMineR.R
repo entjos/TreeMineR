@@ -128,3 +128,28 @@ test_that("Test n_exposed or n_unexposed <= 0",{
               random_seed = 1234)
   }, regexp = "One of `n_exposed` and `n_unexposed` is less or equal to 0.")
 })
+
+test_that("Test calculation of p based on n_exposed and n_unexposed",{
+  expect_message({
+    TreeMineR(data = diagnoses,
+              tree  = icd_10_se,
+              n_exposed = sum(diagnoses$exposed == 1),
+              n_unexposed = sum(diagnoses$exposed == 0),
+              n_monte_carlo_sim = 10,
+              random_seed = 1234)
+  }, regexp = "`p` is set to 0.13406")
+})
+
+test_that("Dictionary is not compatible with dictionary format",{
+  expect_error({
+    TreeMineR(data = diagnoses,
+              tree  = icd_10_se,
+              p = 1/11,
+              n_exposed = 1000,
+              n_unexposed = 10000,
+              dictionary = icd_10_se_dict[,1],
+              n_monte_carlo_sim = 1,
+              random_seed = 1234)
+  }, regexp = "I could not find your `title` and/or `node`")
+})
+

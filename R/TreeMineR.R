@@ -130,7 +130,7 @@ TreeMineR <- function(data,
   if(!is.null(dictionary) & !all(c("title", "node") %in% colnames(dictionary))){
     cli::cli_abort(
       c(
-        "x" = paste("I could not find your a {.code title} and/or {.code node}",
+        "x" = paste("I could not find your {.code title} and/or {.code node}",
                     "column in your dictionary.")
       )
     )
