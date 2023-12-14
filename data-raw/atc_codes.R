@@ -32,6 +32,9 @@ atc <- lapply(seq_len(ncol(atc) - 1), function(i){
 
 colnames(atc) <- c("node", "parent")
 
+# Add ATC as the highest level
+atc[1:14, parent := "ATC"]
+
 # Create a hirachical tree
 atc_codes <- create_tree(atc)
 
