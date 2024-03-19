@@ -11,8 +11,11 @@ Authors@R: c(person(given = "Joshua P.",
            	        family = "Wintzell",
            	        role = "aut",
            	        email = "viktor.wintzell@ki.se"))
-Description: Tree-based scan statistics are a explorative method to identify
-             event clusters across the space of a hirachical tree.
+Description: Tree-based Scan Statistics are an explorative method to identify
+             event clusters across the space of a hirachical tree. This package
+             implements the unconditional Bernoulli Scan Statitic developed by
+             Kulldorff et al. (2003) <doi:10.1111/1541-0420.00039> 
+             for hirachical tree structures.
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true

@@ -1,4 +1,4 @@
-#' Tree scan statistics for R
+#' Unconditional Bernoulli Tree-Based Scan Statistics for R
 #'
 #' @param data
 #'    The dataset used for the computation. The dataset needs to include the

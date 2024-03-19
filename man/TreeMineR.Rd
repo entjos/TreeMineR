@@ -2,7 +2,7 @@
 % Please edit documentation in R/TreeMineR.R
 \name{TreeMineR}
 \alias{TreeMineR}
-\title{Tree scan statistics for R}
+\title{Unconditional Bernoulli Tree-Based Scan Statistics for R}
 \usage{
 TreeMineR(
   data,
@@ -69,7 +69,7 @@ to parallelise the Monte-Carlo simulations to decrease the computation
 time. The default is a sequential run of the Monte-Carlo simulations.}
 }
 \description{
-Tree scan statistics for R
+Unconditional Bernoulli Tree-Based Scan Statistics for R
 }
 \examples{
 TreeMineR(data = diagnoses,
