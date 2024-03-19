@@ -1,7 +1,7 @@
 Package: TreeMineR
 Type: Package
 Title: Tree-Based Scan Statistics for R
-Version: 0.1.0
+Version: 1.0.0
 Authors@R: c(person(given = "Joshua P.",
                     family = "Entrop",
            	        role = c("aut", "cre", "cph"),
