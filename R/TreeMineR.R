@@ -57,6 +57,10 @@
 #'  to parallelise the Monte-Carlo simulations to decrease the computation
 #'  time. The default is a sequential run of the Monte-Carlo simulations.
 #'
+#' @references Kulldorff et al. (2003)
+#'  A tree-based scan statistic for database disease surveillance.
+#'  Biometrics 56(2): 323–331. DOI: 10.1111/1541-0420.00039.
+#'
 #' @examples
 #' TreeMineR(data = diagnoses,
 #'           tree  = icd_10_se,
