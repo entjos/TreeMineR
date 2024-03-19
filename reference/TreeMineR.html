@@ -131,6 +131,12 @@ to parallelise the Monte-Carlo simulations to decrease the computation
 time. The default is a sequential run of the Monte-Carlo simulations.</p></dd>
 
 </dl></div>
+    <div class="section level2">
+    <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
+    <p>Kulldorff et al. (2003)
+ A tree-based scan statistic for database disease surveillance.
+ Biometrics 56(2): 323–331. DOI: 10.1111/1541-0420.00039.</p>
+    </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
@@ -139,18 +145,19 @@ time. The default is a sequential run of the Monte-Carlo simulations.</p></dd>
 <span class="r-in"><span>          p <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">11</span>,</span></span>
 <span class="r-in"><span>          n_monte_carlo_sim <span class="op">=</span> <span class="fl">99</span>,</span></span>
 <span class="r-in"><span>          random_seed <span class="op">=</span> <span class="fl">1234</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           cut  n1   n0      llr    p</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    1:      12 122  669 16.18714 0.01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    2:      11 132  782 13.65786 0.01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    3: V01-X59 241 1687 12.26816 0.01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    4: V01-V99 210 1438 11.95732 0.01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    5:      15 133  822 11.79775 0.01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ---                               </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3406:     P94   1   10  0.00000 1.00</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3407:     T22   1   22  0.00000 1.00</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3408:     Q73   1   11  0.00000 1.00</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3409:     D15   1   12  0.00000 1.00</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3410:     S99   1   12  0.00000 1.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           cut    n1    n0      llr     p</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        &lt;char&gt; &lt;int&gt; &lt;int&gt;    &lt;num&gt; &lt;num&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    1:      12   122   669 16.18714  0.01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    2:      11   132   782 13.65786  0.01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    3: V01-X59   241  1687 12.26816  0.01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    4: V01-V99   210  1438 11.95732  0.01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    5:      15   133   822 11.79775  0.01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ---                                   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3406:     P94     1    10  0.00000  1.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3407:     T22     1    22  0.00000  1.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3408:     Q73     1    11  0.00000  1.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3409:     D15     1    12  0.00000  1.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3410:     S99     1    12  0.00000  1.00</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
