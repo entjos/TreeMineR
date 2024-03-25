@@ -68,6 +68,22 @@ which are used for labeling the cuts in the output of `TreeMineR`.}
 to parallelise the Monte-Carlo simulations to decrease the computation
 time. The default is a sequential run of the Monte-Carlo simulations.}
 }
+\value{
+A `data.frame` with the following columns:
+  \describe{
+    \item{`cut`}{The name of the cut G.}
+    \item{`n1`}{The number of exposed events belonging to cut G.}
+    \item{`n1`}{The number of inexposed events belonging to cut G.}
+    \item{`risk1`}{The absolute risk of getting an event belonging to cut G
+                   among the exposed.}
+    \item{`risk0`}{The absolute risk of getting an event belonging to cut G
+                   among the unexposed.}
+    \item{`RR`}{The risk ratio of the absolute risk among the exposed over
+                the absolute risk among the unexposed}
+    \item{`llr`}{The log-likelihood ratio comparing the observed and
+                 expected number of exposed events belonging to cut G.}
+    \item{`p`}{The P-value that cut G is a cluster of events.}}
+}
 \description{
 Unconditional Bernoulli Tree-Based Scan Statistics for R
 }

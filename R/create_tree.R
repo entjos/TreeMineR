@@ -6,6 +6,9 @@
 #'      \item{`parent`}{A string defining the partent of the node}
 #'      }
 #'
+#' @return A data.frame with one variable `pathString` that describes the
+#'   full path for each leaf included in the hierarchical tree.
+#'
 #' @import data.table
 #' @export create_tree
 

@@ -2,7 +2,7 @@
 #'
 #' A simulated dataset of hospital diagnoses created with the help of
 #' the `comorbidity` package including the following columns:
-#' \itemize{
+#' \describe{
 #'    \item{id}{Individual identifier,}
 #'    \item{case}{Indicator for case status,}
 #'    \item{diag}{An ICD-10 diagnosis code.}

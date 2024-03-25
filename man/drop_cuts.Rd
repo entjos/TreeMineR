@@ -2,7 +2,11 @@
 % Please edit documentation in R/drop_cuts.R
 \name{drop_cuts}
 \alias{drop_cuts}
-\title{Remove cuts from your tree}
+\title{Remove cuts from your tree. This is, e.g., useful if you would like to
+remove certain chapters from the ICD-10 tree used for the analysis as some
+chapters might be a prior deemed irrelevant for the exposure of interest,
+e.g., chapter 20 (external causes of death) might not be of interest if
+when comparing two drug exposures.}
 \usage{
 drop_cuts(tree, cuts, delimiter = "/", return_removed = FALSE)
 }
@@ -39,7 +43,11 @@ If `return_removed = FALSE` a data.frame with a single variable named
  }
 }
 \description{
-Remove cuts from your tree
+Remove cuts from your tree. This is, e.g., useful if you would like to
+remove certain chapters from the ICD-10 tree used for the analysis as some
+chapters might be a prior deemed irrelevant for the exposure of interest,
+e.g., chapter 20 (external causes of death) might not be of interest if
+when comparing two drug exposures.
 }
 \examples{
 drop_cuts(icd_10_se, c("B35-B49", "F41"))

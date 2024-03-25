@@ -68,6 +68,21 @@
 #'           n_monte_carlo_sim = 99,
 #'           random_seed = 1234)
 #'
+#' @return A `data.frame` with the following columns:
+#'   \describe{
+#'     \item{`cut`}{The name of the cut G.}
+#'     \item{`n1`}{The number of exposed events belonging to cut G.}
+#'     \item{`n1`}{The number of inexposed events belonging to cut G.}
+#'     \item{`risk1`}{The absolute risk of getting an event belonging to cut G
+#'                    among the exposed.}
+#'     \item{`risk0`}{The absolute risk of getting an event belonging to cut G
+#'                    among the unexposed.}
+#'     \item{`RR`}{The risk ratio of the absolute risk among the exposed over
+#'                 the absolute risk among the unexposed}
+#'     \item{`llr`}{The log-likelihood ratio comparing the observed and
+#'                  expected number of exposed events belonging to cut G.}
+#'     \item{`p`}{The P-value that cut G is a cluster of events.}}
+#'
 #' @import data.table
 #' @export TreeMineR
 
@@ -229,12 +244,12 @@ TreeMineR <- function(data,
 
     data.table::setcolorder(out, c("title", "cut"))
 
-    out[order(llr, decreasing = TRUE)]
+    as.data.frame(out[order(llr, decreasing = TRUE)])
 
   } else {
 
     # Return
-    out[order(llr, decreasing = TRUE)]
+    as.data.frame(out[order(llr, decreasing = TRUE)])
 
   }
 
