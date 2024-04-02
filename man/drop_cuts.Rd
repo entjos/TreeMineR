@@ -50,6 +50,7 @@ e.g., chapter 20 (external causes of death) might not be of interest
 when comparing two drug exposures.
 }
 \examples{
-drop_cuts(icd_10_se, c("B35-B49", "F41"))
+drop_cuts(icd_10_se, c("B35-B49", "F41")) |>
+   head()
 
 }

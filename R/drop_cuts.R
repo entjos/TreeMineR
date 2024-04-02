@@ -40,7 +40,8 @@
 #'  }
 #'
 #' @examples
-#' drop_cuts(icd_10_se, c("B35-B49", "F41"))
+#' drop_cuts(icd_10_se, c("B35-B49", "F41")) |>
+#'    head()
 #'
 #' @export drop_cuts
 
