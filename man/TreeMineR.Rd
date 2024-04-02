@@ -98,5 +98,5 @@ TreeMineR(data = diagnoses,
 \references{
 Kulldorff et al. (2003)
 A tree-based scan statistic for database disease surveillance.
-Biometrics 56(2): 323–331. DOI: 10.1111/1541-0420.00039.
+Biometrics 56(2): 323-331. DOI: 10.1111/1541-0420.00039.
 }
