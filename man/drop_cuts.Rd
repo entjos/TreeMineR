@@ -5,48 +5,48 @@
 \title{Remove cuts from your tree. This is, e.g., useful if you would like to
 remove certain chapters from the ICD-10 tree used for the analysis as some
 chapters might be a prior deemed irrelevant for the exposure of interest,
-e.g., chapter 20 (external causes of death) might not be of interest if
+e.g., chapter 20 (external causes of death) might not be of interest
 when comparing two drug exposures.}
 \usage{
 drop_cuts(tree, cuts, delimiter = "/", return_removed = FALSE)
 }
 \arguments{
-\item{tree}{A dataset with one variable `pathString` defining the tree structure
+\item{tree}{A dataset with one variable \code{pathString} defining the tree structure
 that you would like to use. This dataset can, e.g., be created using
- \code{\link{create_tree}}.}
+\code{\link{create_tree}}.}
 
 \item{cuts}{A character vector of cuts to remove. Please make sure that your string
- uniquely identifies the cut that should be removed. Each string is passed
- to `gsub` to identify the cuts that should be removed. Hence, strings
- can include regular expressions for identifying cuts. If you would like to
- remove a cut on the top level of the hierarchy, it might be helpful to use
- the `^` regular expression operator.
+uniquely identifies the cut that should be removed. Each string is passed
+to \code{base::gsub()} to identify the cuts that should be removed. Hence, strings
+can include regular expressions for identifying cuts. If you would like to
+remove a cut on the top level of the hierarchy, it might be helpful to use
+the regular expression operator \code{^}.
 
- Regular expression are composed as follows:
- `paste0(cuts, delimiter, "?(.*)")`}
+Regular expression are composed as follows:
+\code{paste0(cuts, delimiter, "?(.*)")}}
 
 \item{delimiter}{A character defining the delimiter of different tree levels within your
-`pathString`. The default is `/`.}
+\code{pathString}. The default is \code{/}.}
 
 \item{return_removed}{A logical value for indicating whether you would like to get a list of
 removed cuts returned by the function.}
 }
 \value{
-If `return_removed = FALSE` a data.frame with a single variable named
- `pathString` is returned, which includes the updated tree. If
- `return_removed = TRUE` a list with two elements is return:
- \describe{
-    \item{tree}{The updated tree file}
-    \item{removed}{A list of character vectors including the paths that
-    have been removed from the supplied tree. The list is named using the
-    cuts supplied to `cut`.}
- }
+If \code{return_removed = FALSE} a data.frame with a single variable named
+\code{pathString} is returned, which includes the updated tree. If
+\code{return_removed = TRUE} a list with two elements is return:
+\describe{
+\item{tree}{The updated tree file}
+\item{removed}{A list of character vectors including the paths that
+have been removed from the supplied tree. The list is named using the
+cuts supplied to \code{cut}.}
+}
 }
 \description{
 Remove cuts from your tree. This is, e.g., useful if you would like to
 remove certain chapters from the ICD-10 tree used for the analysis as some
 chapters might be a prior deemed irrelevant for the exposure of interest,
-e.g., chapter 20 (external causes of death) might not be of interest if
+e.g., chapter 20 (external causes of death) might not be of interest
 when comparing two drug exposures.
 }
 \examples{

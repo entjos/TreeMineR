@@ -1,7 +1,7 @@
 #' Remove cuts from your tree. This is, e.g., useful if you would like to
 #' remove certain chapters from the ICD-10 tree used for the analysis as some
 #' chapters might be a prior deemed irrelevant for the exposure of interest,
-#' e.g., chapter 20 (external causes of death) might not be of interest if
+#' e.g., chapter 20 (external causes of death) might not be of interest
 #' when comparing two drug exposures.
 #'
 #' @param tree
@@ -12,10 +12,10 @@
 #' @param cuts
 #'  A character vector of cuts to remove. Please make sure that your string
 #'  uniquely identifies the cut that should be removed. Each string is passed
-#'  to `gsub` to identify the cuts that should be removed. Hence, strings
+#'  to `base::gsub()` to identify the cuts that should be removed. Hence, strings
 #'  can include regular expressions for identifying cuts. If you would like to
 #'  remove a cut on the top level of the hierarchy, it might be helpful to use
-#'  the `^` regular expression operator.
+#'  the regular expression operator `^`.
 #'
 #'  Regular expression are composed as follows:
 #'  `paste0(cuts, delimiter, "?(.*)")`

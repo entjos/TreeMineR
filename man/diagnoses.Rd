@@ -12,11 +12,11 @@ data(diagnoses)
 }
 \description{
 A simulated dataset of hospital diagnoses created with the help of
-the `comorbidity` package including the following columns:
+the \code{comorbidity} package including the following columns:
 \describe{
-   \item{id}{Individual identifier,}
-   \item{case}{Indicator for case status,}
-   \item{diag}{An ICD-10 diagnosis code.}
+\item{id}{Individual identifier,}
+\item{case}{Indicator for case status,}
+\item{diag}{An ICD-10 diagnosis code.}
 }
 }
 \keyword{datasets}

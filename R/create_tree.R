@@ -1,8 +1,8 @@
-#' Creating a tree file for further use in TreeScan
+#' Creating a tree file for further use in [TreeMineR()].
 #'
 #' @param x A data frame that includes two or three columns:
 #'    \describe{
-#'      \item{`node`}{OA string defining a node}
+#'      \item{`node`}{A string defining a node}
 #'      \item{`parent`}{A string defining the partent of the node}
 #'      }
 #'

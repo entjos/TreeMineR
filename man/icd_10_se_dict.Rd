@@ -10,8 +10,8 @@ data(icd_10_se_dict)
 \description{
 A dataset including the following column:
 \describe{
-   \item{`node`}{A string identidying a node}
-   \item{`title`}{A label for the node}
+\item{\code{node}}{A string identidying a node}
+\item{\code{title}}{A label for the node}
 }
 }
 \keyword{datasets}

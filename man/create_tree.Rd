@@ -2,21 +2,21 @@
 % Please edit documentation in R/create_tree.R
 \name{create_tree}
 \alias{create_tree}
-\title{Creating a tree file for further use in TreeScan}
+\title{Creating a tree file for further use in \code{\link[=TreeMineR]{TreeMineR()}}.}
 \usage{
 create_tree(x)
 }
 \arguments{
 \item{x}{A data frame that includes two or three columns:
 \describe{
-  \item{`node`}{OA string defining a node}
-  \item{`parent`}{A string defining the partent of the node}
-  }}
+\item{\code{node}}{A string defining a node}
+\item{\code{parent}}{A string defining the partent of the node}
+}}
 }
 \value{
-A data.frame with one variable `pathString` that describes the
-  full path for each leaf included in the hierarchical tree.
+A data.frame with one variable \code{pathString} that describes the
+full path for each leaf included in the hierarchical tree.
 }
 \description{
-Creating a tree file for further use in TreeScan
+Creating a tree file for further use in \code{\link[=TreeMineR]{TreeMineR()}}.
 }

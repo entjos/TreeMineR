@@ -10,8 +10,8 @@ data(icd_10_se)
 \description{
 A dataset including the following column:
 \describe{
-   \item{`pathString`}{A string identifying all the parents of a node. Each
-   parent is separated by a `/`.}
+\item{\code{pathString}}{A string identifying all the parents of a node. Each
+parent is separated by a \code{/}.}
 }
 }
 \keyword{datasets}
