@@ -51,11 +51,26 @@ test_that("Test out put if no number of individuals is specified", {
   })
 })
 
+test_that("Test return of test distribution", {
+  expect_snapshot({
+    temp <- TreeMineR(data = diagnoses,
+                      tree  = icd_10_se,
+                      p = 1/11,
+                      dictionary = icd_10_se_dict,
+                      n_monte_carlo_sim = 20,
+                      random_seed = 124,
+                      return_test_dist = TRUE)
+
+    head(temp$test_dist, 10)
+
+  })
+})
+
 test_that("Test that all leafs are included on your tree",{
   expect_error({
     TreeMineR(data = data.frame(id = 1,
                                 leaf = c("KLM", "KLM"),
-                                         exposed = 0),
+                                exposed = 0),
               tree  = icd_10_se,
               p = 1/11,
               n_monte_carlo_sim = 10,

@@ -14,6 +14,7 @@ TreeMineR(
   delimiter = "/",
   n_monte_carlo_sim = 9999,
   random_seed = FALSE,
+  return_test_dist = FALSE,
   future_control = list(strategy = "sequential")
 )
 }
@@ -63,6 +64,11 @@ which are used for labeling the cuts in the output of \code{TreeMineR}.}
 
 \item{random_seed}{Random seed used for the Monte-Carlo simulations.}
 
+\item{return_test_dist}{If \code{true}, a data.frame of the maximum log-likelihood
+ratios in each Monte Carlo simulation will be returned. This distribution
+of the maximum log-likelihood ratios is used for estimating the P-value
+reported in the result table.}
+
 \item{future_control}{A list of arguments passed \code{future::plan}. This is useful if one would like
 to parallelise the Monte-Carlo simulations to decrease the computation
 time. The default is a sequential run of the Monte-Carlo simulations.}
@@ -82,6 +88,19 @@ the absolute risk among the unexposed}
 \item{\code{llr}}{The log-likelihood ratio comparing the observed and
 expected number of exposed events belonging to cut G.}
 \item{\code{p}}{The P-value that cut G is a cluster of events.}}
+
+If \code{return_test_dist}  is \code{true} the function returns a list of two
+data.frame.
+\describe{
+\item{\code{result_table}}{A data.frame including the results as described
+above.}
+\item{\code{test_dist}}{A data.frame with two columns: \code{iteration} the number
+of the Monte Carlo iteration. Note that iteration
+is the calculation based on the original data and
+is, hence, not included in this data.fame. \code{max_llr}:
+the highest observed log-likelihood ratio for each
+Monte Carlo simulation}
+}
 }
 \description{
 Unconditional Bernoulli Tree-Based Scan Statistics for R

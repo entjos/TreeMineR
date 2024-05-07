@@ -94,3 +94,22 @@
       9       01 207 1483  9.287006 0.09523810
       10      16 109  690  8.803335 0.09523810
 
+# Test return of test distribution
+
+    Code
+      temp <- TreeMineR(data = diagnoses, tree = icd_10_se, p = 1 / 11, dictionary = icd_10_se_dict,
+      n_monte_carlo_sim = 20, random_seed = 124, return_test_dist = TRUE)
+      head(temp$test_dist, 10)
+    Output
+         iteration   max_llr
+      1          2 12.208531
+      2          3  5.039655
+      3          4  6.866651
+      4          5  5.097155
+      5          6  7.184879
+      6          7  5.149988
+      7          8  5.039655
+      8          9  5.963116
+      9         10  5.534555
+      10        11  5.777970
+

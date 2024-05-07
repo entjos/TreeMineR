@@ -52,6 +52,11 @@
 #'
 #' @param random_seed Random seed used for the Monte-Carlo simulations.
 #'
+#' @param return_test_dist If `true`, a data.frame of the maximum log-likelihood
+#'  ratios in each Monte Carlo simulation will be returned. This distribution
+#'  of the maximum log-likelihood ratios is used for estimating the P-value
+#'  reported in the result table.
+#'
 #' @param future_control
 #'  A list of arguments passed `future::plan`. This is useful if one would like
 #'  to parallelise the Monte-Carlo simulations to decrease the computation
@@ -84,6 +89,19 @@
 #'                  expected number of exposed events belonging to cut G.}
 #'     \item{`p`}{The P-value that cut G is a cluster of events.}}
 #'
+#'  If `return_test_dist`  is `true` the function returns a list of two
+#'  data.frame.
+#'  \describe{
+#'     \item{`result_table`}{A data.frame including the results as described
+#'                           above.}
+#'     \item{`test_dist`}{A data.frame with two columns: `iteration` the number
+#'                        of the Monte Carlo iteration. Note that iteration
+#'                        is the calculation based on the original data and
+#'                        is, hence, not included in this data.fame. `max_llr`:
+#'                        the highest observed log-likelihood ratio for each
+#'                        Monte Carlo simulation}
+#'                        }
+#'
 #' @import data.table
 #' @export TreeMineR
 
@@ -96,6 +114,7 @@ TreeMineR <- function(data,
                       delimiter = "/",
                       n_monte_carlo_sim = 9999,
                       random_seed = FALSE,
+                      return_test_dist = FALSE,
                       future_control = list(strategy = "sequential")){
 
   # Declare variables used in data.table for R CMD check
@@ -245,12 +264,19 @@ TreeMineR <- function(data,
 
     data.table::setcolorder(out, c("title", "cut"))
 
-    as.data.frame(out[order(llr, decreasing = TRUE)])
+  }
+
+  # Order by descending llr
+  data.table::setorder(out, -llr)
+
+  if(return_test_dist){
+
+    list(result_table = as.data.frame(out),
+         test_dist    = as.data.frame(test_distribution))
 
   } else {
 
-    # Return
-    as.data.frame(out[order(llr, decreasing = TRUE)])
+    as.data.frame(out)
 
   }
 
