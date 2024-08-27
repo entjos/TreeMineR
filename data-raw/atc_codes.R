@@ -1,9 +1,10 @@
 library(data.table)
+devtools::load_all()
 
 # Downloaded from https://bioportal.bioontology.org/ontologies/ATC
 # used .csv version
 # based on Version 2023AB
-atc <- atc_raw
+# atc_raw <-  fread("path to .csv file")
 
 # Remove codes that do not represent a drug or drug class
 atc <- atc_raw[!`Preferred Label` %in% c("Entity", "Event")]
@@ -16,7 +17,7 @@ atc[, parent := gsub("^(.*)\\/(.*)", "\\2", Parents)]
 atc[parent == "owl#Thing", parent := "ATC"]
 
 # Create tree
-atc_tree <- create_tree(atc[, .(node, parent)])
+atc_codes <- create_tree(atc[, .(node, parent)])
 
 # Add atc_codes to package data
 usethis::use_data(atc_codes, overwrite = TRUE)
