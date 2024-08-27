@@ -1,3 +1,6 @@
+# Script for creating icd_10_se.rda
+# This script is based on data from Socialstyrelsen
+
 library(data.table)
 
 # Load ICD-10-SE codes from SoS

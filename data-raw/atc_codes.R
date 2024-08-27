@@ -1,10 +1,12 @@
-library(data.table)
-devtools::load_all()
-
+# Script for creating atc_codes.rda
+# This script is based on data from BioPortal
 # Downloaded from https://bioportal.bioontology.org/ontologies/ATC
 # used .csv version
 # based on Version 2023AB
 # atc_raw <-  fread("path to .csv file")
+
+library(data.table)
+devtools::load_all()
 
 # Remove codes that do not represent a drug or drug class
 atc <- atc_raw[!`Preferred Label` %in% c("Entity", "Event")]

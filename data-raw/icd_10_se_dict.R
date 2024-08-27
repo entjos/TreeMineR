@@ -1,3 +1,6 @@
+# Script for creating icd_10_se_dict.rda
+# This script is based on data from Socialstyrelsen
+
 library(data.table)
 library(stringi)
 
