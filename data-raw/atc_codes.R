@@ -1,42 +1,22 @@
 library(data.table)
 
-# Downloaded from https://bioportal.bioontology.org/ontologies/ATC/?p=summary
-# based on Version 2023AA
+# Downloaded from https://bioportal.bioontology.org/ontologies/ATC
+# used .csv version
+# based on Version 2023AB
 atc <- atc_raw
 
-# Extract level 5 ATC codes
-atc[, atc := gsub("^(.*)\\/(.*)", "\\2", `Class ID`)]
-atc <- atc[`ATC LEVEL` == 5, .(atc)]
+# Remove codes that do not represent a drug or drug class
+atc <- atc_raw[!`Preferred Label` %in% c("Entity", "Event")]
 
-# Extract all parent codes of the level 5 codes (Note 1)
-atc <- lapply(list(1, 3, 4, 5, 7), function(x) substr(atc$atc, 1, x)) |>
-  as.data.table()
+# Nodes and corresponding parents
+atc[, node   := gsub("^(.*)\\/(.*)", "\\2", `Class ID`)]
+atc[, parent := gsub("^(.*)\\/(.*)", "\\2", Parents)]
 
-# Put level 1 codes at the end
-setcolorder(atc, rev(colnames(atc)))
+# Rename root from owl#Thing to ATC
+atc[parent == "owl#Thing", parent := "ATC"]
 
-# Re order rows
-setorder(atc, V5)
-
-# Add no parent for level 1 codes
-atc[, V0 := NA]
-
-# Create a data set defining the ATC hirachy using node and parents
-atc <- lapply(seq_len(ncol(atc) - 1), function(i){
-
-  unique(atc[, .SD, .SDcols = c(i, i + 1)])
-
-})      |>
-  rev() |>
-  rbindlist(use.names = FALSE)
-
-colnames(atc) <- c("node", "parent")
-
-# Add ATC as the highest level
-atc[1:14, parent := "ATC"]
-
-# Create a hirachical tree
-atc_codes <- create_tree(atc)
+# Create tree
+atc_tree <- create_tree(atc[, .(node, parent)])
 
 # Add atc_codes to package data
 usethis::use_data(atc_codes, overwrite = TRUE)
