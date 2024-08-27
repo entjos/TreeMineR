@@ -33,4 +33,5 @@ Imports:
     future,
     future.apply,
     cli (>= 3.6.1)
-URL: https://entjos.github.io/TreeMineR/
+URL: https://entjos.github.io/TreeMineR/, https://github.com/entjos/TreeMineR
+BugReports: https://github.com/entjos/TreeMineR/issues
