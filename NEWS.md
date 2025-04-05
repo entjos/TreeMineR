@@ -1,4 +1,4 @@
-# TreeMineR (development version)
+# TreeMineR 1.0.3
 
 # TreeMineR 1.0.3
 
