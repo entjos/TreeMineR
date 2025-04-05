@@ -1,0 +1,62 @@
+---
+title: "Tree Based Scan Statistics"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Tree-bases-scan-statistics}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+This vignette aims to give a short intoduction on how to use this package to run tree-based scan statistics in R. Tree-based scan statistic is a data driven method for identifying clusters of events across a hierarchical tree. This could, e.g., be disease clusters across the ICD-10 tree. This method is commonly used in pharmacovigilance to identify potential side effects of drugs, using an agnostic approach. Before we get started, let’s just define some terminology:
+
+* **Leaf** is the most detailed code that is available for an event, e.g., the most detailed ICD-10 code for a diagnosis.
+* **Hierarchical structure** is a system consisting of different nodes in which each node has at least one parent node, except for the root node.
+* **Cut** is any node between the leaf node and the root node. 
+
+Please check [Kulldorff et al. (2013)](https://doi.org/10.1002/pds.3423) for a more detailed description of the method. Let's load the `TreeMineR` package to get started.
+
+```{r setup}
+library(TreeMineR)
+```
+
+The `TreeMineR` package comes with the `diagnosis` data set which includes simulated diagnosis data on some exposed and unexposed individuals. In order to use the `TreeMineR` function, we need to prepare the data in a special format. Each row in our data set needs to correspond to one diagnosis with information on which individual received this diagnosis and whether the individual was exposed or unexposed. The diagnosis dataset, is fortunately, already in the right format. Let's have a look:
+
+```{r}
+diagnoses
+```
+
+Besides our diagnosis data, we also need an object that defines our hierarchical tree. This data frame includes a variable called `pathString`, which defines the full path for each leaf. Let's look at an example. The `pathString` for the ICD-10 code B369 looks as follows: the code is part of the group B36, which in turn is part of the block B35-B49, which in turn is part of the ICD-10 chapter 1, which in turn is part of the ICD-10-SE coding system. The full path, hence, is `ICD-10-SE/01/B35-B49/B36/B369`. Important is, that each of the leafs included in the data also has one row in the tree. E.g., if we have an observation with a diagnosis code B36, we also need to add a row to the tree file which finishes with B36, i.e., `ICD-10-SE/01/B35-B49/B36`.
+
+The ICD-10-SE, is already included in the TreeMineR package and can be used out of the box. If you want to use another tree structure, take a look at the `create_tree` function, which makes it easy to define new tree structures. Also the `drop_cuts` function can be useful if you want to remove some leafs from your tree. This is, e.g., helpful in situations, where you *a priori* want to remove some ICD-10 chapters from your analysis.
+
+Let's have a look at the first rows of the ICD-10-SE tree file:
+
+```{r}
+head(icd_10_se)
+```
+
+Once we have the tree file defined and the data in the right format, we can use the `TreeMineR()` function to identify potential event clusters. The `TreeMineR()` function has an inbuild parallelisation via the future package, which can be set up using the `future_control` argument.
+
+Let's do a test run:
+
+```{r}
+ TreeMineR(
+  data = diagnoses,
+  tree  = icd_10_se,
+  p = 1/11,
+  n_exposed = 1000,
+  n_unexposed = 10000,
+  n_monte_carlo_sim = 20,
+  random_seed = 124,
+  future_control = list("sequential")
+  ) |> head()
+```
+
+In our data, we could identify three event clusters (Ch. 12, Ch. 11, V01-X59) which passed the p < 0.05 threshold, suggesting that exposed individuals have a higher risk of being diagnosed with these disease groups than unexposed individuals. Usually, you would like to increase the number of Monte Carlo simulation runs to increase the stability of the results.
