@@ -1,6 +1,6 @@
-# TreeMineR 1.0.2
+# TreeMineR 1.0.3
 
-This version includes some minor bug fixes and adds some minor additional argument to `TreeMineR()`.
+This version adds a vignette to the package.
 
 ## R CMD check results
 
