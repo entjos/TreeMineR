@@ -3,7 +3,7 @@ pkgdown: 2.1.1
 pkgdown_sha: ~
 articles:
   Tree-based-scan-statistics: Tree-based-scan-statistics.html
-last_built: 2025-04-05T12:49Z
+last_built: 2025-04-05T12:54Z
 urls:
   reference: https://entjos.github.io/TreeMineR/reference
   article: https://entjos.github.io/TreeMineR/articles
