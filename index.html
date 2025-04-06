@@ -52,31 +52,35 @@
   </div>
 </nav><div class="container template-home">
 <div class="row">
-  <main id="main" class="col-md-9"><div class="section level1">
-<div class="page-header"><h1 id="treeminer">TreeMineR<a class="anchor" aria-label="anchor" href="#treeminer"></a>
-</h1></div>
-<!-- badges: start -->
-
-<p>Implementation of tree-based scan statistics as described in <a href="https://doi.org/10.1002/pds.3423" class="external-link">Kulldorff et al. (2013)</a> or <a href="https://doi.org/10.1111/1541-0420.00039" class="external-link">Kulldorff et al. (2003)</a>. To get started, please take a look at the <a href="https://entjos.github.io/TreeMineR/articles/Tree-based-scan-statistics.html">vignette</a> or check the documentation of the main functions:</p>
+  <main id="main" class="col-md-9">
+<div class="section level2">
+<h2 id="description">Description<a class="anchor" aria-label="anchor" href="#description"></a>
+</h2>
+<p>This package is an R implementation of tree-based scan statistics as described in <a href="https://doi.org/10.1002/pds.3423" class="external-link">Kulldorff et al. (2013)</a> or <a href="https://doi.org/10.1111/1541-0420.00039" class="external-link">Kulldorff et al. (2003)</a>. To get started, please take a look at the <a href="https://entjos.github.io/TreeMineR/articles/Tree-based-scan-statistics.html">vignette</a> or check the documentation of the main functions:</p>
 <ul>
 <li><code><a href="reference/TreeMineR.html">TreeMineR()</a></code></li>
 <li><code><a href="reference/create_tree.html">create_tree()</a></code></li>
 <li><code>cut_the_tree()</code></li>
 </ul>
-<p>The package also includes the following pre-defined hierarchical trees, which can be used out of the box. Please check their help files for more information.</p>
-<ul>
-<li><code>icd_10_se</code></li>
-<li><code>atc_codes</code></li>
-</ul>
+<p>The package also includes the following pre-defined hierarchical trees, which can be used out of the box. Please check their help files for more information. - <code>icd_10_se</code> - <code>atc_codes</code></p>
+</div>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>You can install the development version of TreeMineR from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
+<p>For installing the package from CRAN please use</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"TreeMineR"</span><span class="op">)</span></span></code></pre></div>
+<p>If you would like to use the latest development version from GitHub please use</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># install.packages("remotes")</span></span>
 <span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"entjos/TreeMineR"</span><span class="op">)</span></span></code></pre></div>
 </div>
+<div class="section level2">
+<h2 id="bugs">Bugs<a class="anchor" aria-label="anchor" href="#bugs"></a>
+</h2>
+<p>If you find any bugs or have any suggestion please don’t hesitate to file an issue on GitHub.</p>
 </div>
+
   </main><aside class="col-md-3"><div class="links">
 <h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
