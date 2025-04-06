@@ -57,13 +57,15 @@
 </h1></div>
 <!-- badges: start -->
 
+<p>Implementation of tree-based scan statistics as described in <a href="https://doi.org/10.1002/pds.3423" class="external-link">Kulldorff et al. (2013)</a> or <a href="https://doi.org/10.1111/1541-0420.00039" class="external-link">Kulldorff et al. (2003)</a>. To get started, please take a look at the <a href="https://entjos.github.io/TreeMineR/articles/Tree-based-scan-statistics.html">vignette</a> or check the documentation of the main functions: * <code><a href="reference/TreeMineR.html">TreeMineR()</a></code> * <code><a href="reference/create_tree.html">create_tree()</a></code> * <code>cut_the_tree()</code></p>
+<p>The package also includes the following pre-defined hierarchical trees, which can be used out of the box. Please check their help files for more information. * <code>icd_10_se</code> * <code>atc_codes</code></p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
 <p>You can install the development version of TreeMineR from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># install.packages("devtools")</span></span>
-<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"entjos/TreeMineR"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># install.packages("remotes")</span></span>
+<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"entjos/TreeMineR"</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">
