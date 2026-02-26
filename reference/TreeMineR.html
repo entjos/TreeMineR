@@ -69,25 +69,28 @@ following columns:</p>
 <dd><p>An integer that is unique to every individual.</p></dd>
 
 <dt><code>leaf</code></dt>
-<dd><p>A string identifying the unique diagnoses or leafs for each individual.</p></dd>
+<dd><p>A string identifying the unique diagnoses or leafs
+for each individual.</p></dd>
 
 <dt><code>exposed</code></dt>
-<dd><p>A 0/1 indicator of the individual's exposure status.</p></dd>
+<dd><p>A 0/1 indicator of the individual's exposure status.
+Exposure status must be constant within ids, i.e.,
+an individual can either be exposed or unexposed.</p></dd>
 
 
 </dl><p>See below for the first and last rows included in the example dataset.</p>
-<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>   id leaf exposed</span>
-<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>    <span class="dv">1</span> K251       <span class="dv">0</span></span>
-<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>    <span class="dv">2</span> Q702       <span class="dv">0</span></span>
-<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>    <span class="dv">3</span>  G96       <span class="dv">0</span></span>
-<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a>    <span class="dv">3</span> S949       <span class="dv">0</span></span>
-<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a>    <span class="dv">4</span> S951       <span class="dv">0</span></span>
-<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a> <span class="sc">---</span></span>
-<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a>  <span class="dv">999</span> V539       <span class="dv">1</span></span>
-<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a>  <span class="dv">999</span> V625       <span class="dv">1</span></span>
-<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a>  <span class="dv">999</span> G823       <span class="dv">1</span></span>
-<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a> <span class="dv">1000</span>  L42       <span class="dv">1</span></span>
-<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a> <span class="dv">1000</span> T524       <span class="dv">1</span></span></code></pre><p></p></div></dd>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>id   leaf exposed</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a> <span class="dv">1</span>   K251       <span class="dv">0</span></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a> <span class="dv">2</span>   Q702       <span class="dv">0</span></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a> <span class="dv">3</span>    G96       <span class="dv">0</span></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a> <span class="dv">3</span>   S949       <span class="dv">0</span></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a> <span class="dv">4</span>   S951       <span class="dv">0</span></span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a><span class="sc">---</span></span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a><span class="dv">10999</span>   V539       <span class="dv">1</span></span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a><span class="dv">10999</span>   V625       <span class="dv">1</span></span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a><span class="dv">10999</span>   G823       <span class="dv">1</span></span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a><span class="dv">11000</span>    L42       <span class="dv">1</span></span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a><span class="dv">11000</span>   T524       <span class="dv">1</span></span></code></pre><p></p></div></dd>
 
 
 <dt id="arg-tree">tree<a class="anchor" aria-label="anchor" href="#arg-tree"></a></dt>
@@ -201,12 +204,12 @@ Biometrics 56(2): 323-331. DOI: 10.1111/1541-0420.00039.</p>
 <span class="r-in"><span>          random_seed <span class="op">=</span> <span class="fl">1234</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       cut  n1   n0      llr    p</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1      12 122  669 16.18714 0.01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2      11 132  782 13.65786 0.01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 V01-X59 241 1687 12.26816 0.01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4 V01-V99 210 1438 11.95732 0.01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5      15 133  822 11.79775 0.01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6      19 306 2281 10.80614 0.01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1      12 127  674 18.52600 0.01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2      19 337 2329 18.32574 0.01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 V01-X59 254 1708 15.78202 0.01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4      02 221 1467 14.57499 0.01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5 V01-V99 219 1453 14.47571 0.01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6      11 134  784 14.47115 0.01</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
@@ -219,7 +222,7 @@ Biometrics 56(2): 323-331. DOI: 10.1111/1541-0420.00039.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer></div>

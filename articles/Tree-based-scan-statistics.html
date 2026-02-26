@@ -101,18 +101,18 @@ look:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">diagnoses</span></span>
 <span><span class="co">#&gt;           id   leaf exposed</span></span>
-<span><span class="co">#&gt;        &lt;int&gt; &lt;char&gt;   &lt;num&gt;</span></span>
+<span><span class="co">#&gt;        &lt;num&gt; &lt;char&gt;   &lt;num&gt;</span></span>
 <span><span class="co">#&gt;     1:     1   K251       0</span></span>
 <span><span class="co">#&gt;     2:     2   Q702       0</span></span>
 <span><span class="co">#&gt;     3:     3    G96       0</span></span>
 <span><span class="co">#&gt;     4:     3   S949       0</span></span>
 <span><span class="co">#&gt;     5:     4   S951       0</span></span>
 <span><span class="co">#&gt;    ---                     </span></span>
-<span><span class="co">#&gt; 22985:   999   V539       1</span></span>
-<span><span class="co">#&gt; 22986:   999   V625       1</span></span>
-<span><span class="co">#&gt; 22987:   999   G823       1</span></span>
-<span><span class="co">#&gt; 22988:  1000    L42       1</span></span>
-<span><span class="co">#&gt; 22989:  1000   T524       1</span></span></code></pre></div>
+<span><span class="co">#&gt; 22985: 10999   V539       1</span></span>
+<span><span class="co">#&gt; 22986: 10999   V625       1</span></span>
+<span><span class="co">#&gt; 22987: 10999   G823       1</span></span>
+<span><span class="co">#&gt; 22988: 11000    L42       1</span></span>
+<span><span class="co">#&gt; 22989: 11000   T524       1</span></span></code></pre></div>
 <p>Besides our diagnosis data, we also need an object that defines our
 hierarchical tree. This data frame includes a variable called
 <code>pathString</code>, which defines the full path for each leaf.
@@ -160,12 +160,12 @@ parallelisation via the future package, which can be set up using the
 <span>  future_control <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"sequential"</span><span class="op">)</span></span>
 <span>  <span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt;       cut  n1   n0 risk1  risk0       RR      llr          p</span></span>
-<span><span class="co">#&gt; 1      12 122  669 0.122 0.0669 1.823617 16.18714 0.04761905</span></span>
-<span><span class="co">#&gt; 2      11 132  782 0.132 0.0782 1.687980 13.65786 0.04761905</span></span>
-<span><span class="co">#&gt; 3 V01-X59 241 1687 0.241 0.1687 1.428571 12.26816 0.04761905</span></span>
-<span><span class="co">#&gt; 4 V01-V99 210 1438 0.210 0.1438 1.460362 11.95732 0.09523810</span></span>
-<span><span class="co">#&gt; 5      15 133  822 0.133 0.0822 1.618005 11.79775 0.09523810</span></span>
-<span><span class="co">#&gt; 6      19 306 2281 0.306 0.2281 1.341517 10.80614 0.09523810</span></span></code></pre></div>
+<span><span class="co">#&gt; 1      12 127  674 0.127 0.0674 1.884273 18.52600 0.04761905</span></span>
+<span><span class="co">#&gt; 2      19 337 2329 0.337 0.2329 1.446973 18.32574 0.04761905</span></span>
+<span><span class="co">#&gt; 3 V01-X59 254 1708 0.254 0.1708 1.487119 15.78202 0.04761905</span></span>
+<span><span class="co">#&gt; 4      02 221 1467 0.221 0.1467 1.506476 14.57499 0.04761905</span></span>
+<span><span class="co">#&gt; 5 V01-V99 219 1453 0.219 0.1453 1.507226 14.47571 0.04761905</span></span>
+<span><span class="co">#&gt; 6      11 134  784 0.134 0.0784 1.709184 14.47115 0.04761905</span></span></code></pre></div>
 <p>In our data, we could identify three event clusters (Ch. 12, Ch. 11,
 V01-X59) which passed the p &lt; 0.05 threshold, suggesting that exposed
 individuals have a higher risk of being diagnosed with these disease
@@ -182,7 +182,7 @@ the results.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer>
