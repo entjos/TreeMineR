@@ -4,36 +4,17 @@
       head(TreeMineR(data = diagnoses, tree = icd_10_se, p = 1 / 11, n_exposed = 1000,
       n_unexposed = 10000, n_monte_carlo_sim = 10, random_seed = 1234), 10)
     Output
-             cut  n1   n0 risk1  risk0       RR       llr          p
-      1       12 122  669 0.122 0.0669 1.823617 16.187145 0.09090909
-      2       11 132  782 0.132 0.0782 1.687980 13.657855 0.09090909
-      3  V01-X59 241 1687 0.241 0.1687 1.428571 12.268163 0.09090909
-      4  V01-V99 210 1438 0.210 0.1438 1.460362 11.957318 0.09090909
-      5       15 133  822 0.133 0.0822 1.618005 11.797748 0.09090909
-      6       19 306 2281 0.306 0.2281 1.341517 10.806142 0.09090909
-      7       02 207 1452 0.207 0.1452 1.425620 10.423109 0.09090909
-      8       18 114  712 0.114 0.0712 1.601124  9.711722 0.09090909
-      9       01 207 1483 0.207 0.1483 1.395819  9.287006 0.09090909
-      10      16 109  690 0.109 0.0690 1.579710  8.803335 0.09090909
-
-# Check parallel test run
-
-    Code
-      head(TreeMineR(data = diagnoses, tree = icd_10_se, p = 1 / 11, n_exposed = 1000,
-      n_unexposed = 10000, n_monte_carlo_sim = 20, random_seed = 124, future_control = list(
-        "multisession", workers = 2)), 10)
-    Output
-             cut  n1   n0 risk1  risk0       RR       llr          p
-      1       12 122  669 0.122 0.0669 1.823617 16.187145 0.04761905
-      2       11 132  782 0.132 0.0782 1.687980 13.657855 0.04761905
-      3  V01-X59 241 1687 0.241 0.1687 1.428571 12.268163 0.04761905
-      4  V01-V99 210 1438 0.210 0.1438 1.460362 11.957318 0.09523810
-      5       15 133  822 0.133 0.0822 1.618005 11.797748 0.09523810
-      6       19 306 2281 0.306 0.2281 1.341517 10.806142 0.09523810
-      7       02 207 1452 0.207 0.1452 1.425620 10.423109 0.09523810
-      8       18 114  712 0.114 0.0712 1.601124  9.711722 0.09523810
-      9       01 207 1483 0.207 0.1483 1.395819  9.287006 0.09523810
-      10      16 109  690 0.109 0.0690 1.579710  8.803335 0.09523810
+             cut  n1   n0 risk1  risk0       RR      llr          p
+      1       12 127  674 0.127 0.0674 1.884273 18.52600 0.09090909
+      2       19 337 2329 0.337 0.2329 1.446973 18.32574 0.09090909
+      3  V01-X59 254 1708 0.254 0.1708 1.487119 15.78202 0.09090909
+      4       02 221 1467 0.221 0.1467 1.506476 14.57499 0.09090909
+      5  V01-V99 219 1453 0.219 0.1453 1.507226 14.47571 0.09090909
+      6       11 134  784 0.134 0.0784 1.709184 14.47115 0.09090909
+      7       20 333 2419 0.333 0.2419 1.376602 13.79084 0.09090909
+      8       01 220 1498 0.220 0.1498 1.468625 12.87728 0.09090909
+      9       15 134  828 0.134 0.0828 1.618357 11.89632 0.09090909
+      10      18 117  717 0.117 0.0717 1.631799 10.71622 0.09090909
 
 # Test the use of titles
 
@@ -44,26 +25,26 @@
     Output
                                                                                                                        title
       1                                                                           Hudens och underhudens sjukdomar (L00-L99)
-      2                                                                            Matsmaltningsorganens sjukdomar (K00-K93)
+      2                                             Skador, forgiftningar och vissa andra foljder av yttre orsaker (S00-T98)
       3                                                                                                           Olycksfall
-      4                                                                                                     Transportolyckor
-      5                                                                   Graviditet, forlossning och barnsangstid (O00-O99)
-      6                                             Skador, forgiftningar och vissa andra foljder av yttre orsaker (S00-T98)
-      7                                                                                                    Tumorer (C00-D48)
-      8  Symtom, sjukdomstecken och onormala kliniska fynd och laboratoriefynd som ej klassificeras pa annan plats (R00-R99)
-      9                                                             Vissa infektionssjukdomar och parasitsjukdomar (A00-B99)
-      10                                                                                Vissa perinatala tillstand (P00-P96)
-             cut  n1   n0 risk1  risk0       RR       llr          p
-      1       12 122  669 0.122 0.0669 1.823617 16.187145 0.04761905
-      2       11 132  782 0.132 0.0782 1.687980 13.657855 0.04761905
-      3  V01-X59 241 1687 0.241 0.1687 1.428571 12.268163 0.04761905
-      4  V01-V99 210 1438 0.210 0.1438 1.460362 11.957318 0.09523810
-      5       15 133  822 0.133 0.0822 1.618005 11.797748 0.09523810
-      6       19 306 2281 0.306 0.2281 1.341517 10.806142 0.09523810
-      7       02 207 1452 0.207 0.1452 1.425620 10.423109 0.09523810
-      8       18 114  712 0.114 0.0712 1.601124  9.711722 0.09523810
-      9       01 207 1483 0.207 0.1483 1.395819  9.287006 0.09523810
-      10      16 109  690 0.109 0.0690 1.579710  8.803335 0.09523810
+      4                                                                                                    Tumorer (C00-D48)
+      5                                                                                                     Transportolyckor
+      6                                                                            Matsmaltningsorganens sjukdomar (K00-K93)
+      7                                                                         Yttre orsaker till sjukdom och dod (V01-Y98)
+      8                                                             Vissa infektionssjukdomar och parasitsjukdomar (A00-B99)
+      9                                                                   Graviditet, forlossning och barnsangstid (O00-O99)
+      10 Symtom, sjukdomstecken och onormala kliniska fynd och laboratoriefynd som ej klassificeras pa annan plats (R00-R99)
+             cut  n1   n0 risk1  risk0       RR      llr          p
+      1       12 127  674 0.127 0.0674 1.884273 18.52600 0.04761905
+      2       19 337 2329 0.337 0.2329 1.446973 18.32574 0.04761905
+      3  V01-X59 254 1708 0.254 0.1708 1.487119 15.78202 0.04761905
+      4       02 221 1467 0.221 0.1467 1.506476 14.57499 0.04761905
+      5  V01-V99 219 1453 0.219 0.1453 1.507226 14.47571 0.04761905
+      6       11 134  784 0.134 0.0784 1.709184 14.47115 0.04761905
+      7       20 333 2419 0.333 0.2419 1.376602 13.79084 0.04761905
+      8       01 220 1498 0.220 0.1498 1.468625 12.87728 0.04761905
+      9       15 134  828 0.134 0.0828 1.618357 11.89632 0.04761905
+      10      18 117  717 0.117 0.0717 1.631799 10.71622 0.09523810
 
 # Test out put if no number of individuals is specified
 
@@ -73,26 +54,26 @@
     Output
                                                                                                                        title
       1                                                                           Hudens och underhudens sjukdomar (L00-L99)
-      2                                                                            Matsmaltningsorganens sjukdomar (K00-K93)
+      2                                             Skador, forgiftningar och vissa andra foljder av yttre orsaker (S00-T98)
       3                                                                                                           Olycksfall
-      4                                                                                                     Transportolyckor
-      5                                                                   Graviditet, forlossning och barnsangstid (O00-O99)
-      6                                             Skador, forgiftningar och vissa andra foljder av yttre orsaker (S00-T98)
-      7                                                                                                    Tumorer (C00-D48)
-      8  Symtom, sjukdomstecken och onormala kliniska fynd och laboratoriefynd som ej klassificeras pa annan plats (R00-R99)
-      9                                                             Vissa infektionssjukdomar och parasitsjukdomar (A00-B99)
-      10                                                                                Vissa perinatala tillstand (P00-P96)
-             cut  n1   n0       llr          p
-      1       12 122  669 16.187145 0.04761905
-      2       11 132  782 13.657855 0.04761905
-      3  V01-X59 241 1687 12.268163 0.04761905
-      4  V01-V99 210 1438 11.957318 0.09523810
-      5       15 133  822 11.797748 0.09523810
-      6       19 306 2281 10.806142 0.09523810
-      7       02 207 1452 10.423109 0.09523810
-      8       18 114  712  9.711722 0.09523810
-      9       01 207 1483  9.287006 0.09523810
-      10      16 109  690  8.803335 0.09523810
+      4                                                                                                    Tumorer (C00-D48)
+      5                                                                                                     Transportolyckor
+      6                                                                            Matsmaltningsorganens sjukdomar (K00-K93)
+      7                                                                         Yttre orsaker till sjukdom och dod (V01-Y98)
+      8                                                             Vissa infektionssjukdomar och parasitsjukdomar (A00-B99)
+      9                                                                   Graviditet, forlossning och barnsangstid (O00-O99)
+      10 Symtom, sjukdomstecken och onormala kliniska fynd och laboratoriefynd som ej klassificeras pa annan plats (R00-R99)
+             cut  n1   n0      llr          p
+      1       12 127  674 18.52600 0.04761905
+      2       19 337 2329 18.32574 0.04761905
+      3  V01-X59 254 1708 15.78202 0.04761905
+      4       02 221 1467 14.57499 0.04761905
+      5  V01-V99 219 1453 14.47571 0.04761905
+      6       11 134  784 14.47115 0.04761905
+      7       20 333 2419 13.79084 0.04761905
+      8       01 220 1498 12.87728 0.04761905
+      9       15 134  828 11.89632 0.04761905
+      10      18 117  717 10.71622 0.09523810
 
 # Test return of test distribution
 
@@ -102,14 +83,14 @@
       head(temp$test_dist, 10)
     Output
          iteration   max_llr
-      1          2 12.208531
-      2          3  5.039655
+      1          2 10.998093
+      2          3  5.963116
       3          4  6.866651
-      4          5  5.097155
-      5          6  7.184879
-      6          7  5.149988
-      7          8  5.039655
+      4          5  5.039655
+      5          6  6.051306
+      6          7  5.431785
+      7          8  5.131699
       8          9  5.963116
-      9         10  5.534555
-      10        11  5.777970
+      9         10  6.430469
+      10        11  5.589140
 

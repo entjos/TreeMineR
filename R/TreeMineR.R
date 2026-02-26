@@ -6,24 +6,27 @@
 #'
 #'    \describe{
 #'    \item{`id`}{An integer that is unique to every individual.}
-#'    \item{`leaf`}{A string identifying the unique diagnoses or leafs for each individual.}
-#'    \item{`exposed`}{A 0/1 indicator of the individual's exposure status.}
+#'    \item{`leaf`}{A string identifying the unique diagnoses or leafs 
+#'                  for each individual.}
+#'    \item{`exposed`}{A 0/1 indicator of the individual's exposure status.
+#'                     Exposure status must be constant within ids, i.e.,
+#'                     an individual can either be exposed or unexposed.}
 #'    }
 #'    See below for the first and last rows included in the example dataset.
 #'
 #'    ```
-#'       id leaf exposed
-#'        1 K251       0
-#'        2 Q702       0
-#'        3  G96       0
-#'        3 S949       0
-#'        4 S951       0
-#'     ---
-#'      999 V539       1
-#'      999 V625       1
-#'      999 G823       1
-#'     1000  L42       1
-#'     1000 T524       1
+#'    id   leaf exposed
+#'     1   K251       0
+#'     2   Q702       0
+#'     3    G96       0
+#'     3   S949       0
+#'     4   S951       0
+#'   ---               
+#' 10999   V539       1
+#' 10999   V625       1
+#' 10999   G823       1
+#' 11000    L42       1
+#' 11000   T524       1
 #'    ```
 #'
 #' @param tree
@@ -171,6 +174,15 @@ TreeMineR <- function(data,
       c(
         "x" = paste("I could not find your {.code title} and/or {.code node}",
                     "column in your dictionary.")
+      )
+    )
+  }
+
+  if(any(data[, uniqueN(exposed) > 1, by = id]$V1)){
+    cli::cli_abort(
+      c(
+        "x" = "Exposure is not constant within individuals in {.code data}.",
+        "i" = "Each individual can either be exposed or unexposed."
       )
     )
   }

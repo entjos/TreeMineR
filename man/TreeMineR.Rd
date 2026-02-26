@@ -24,23 +24,26 @@ following columns:
 
 \describe{
 \item{\code{id}}{An integer that is unique to every individual.}
-\item{\code{leaf}}{A string identifying the unique diagnoses or leafs for each individual.}
-\item{\code{exposed}}{A 0/1 indicator of the individual's exposure status.}
+\item{\code{leaf}}{A string identifying the unique diagnoses or leafs
+for each individual.}
+\item{\code{exposed}}{A 0/1 indicator of the individual's exposure status.
+Exposure status must be constant within ids, i.e.,
+an individual can either be exposed or unexposed.}
 }
 See below for the first and last rows included in the example dataset.
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{   id leaf exposed
-    1 K251       0
-    2 Q702       0
-    3  G96       0
-    3 S949       0
-    4 S951       0
- ---
-  999 V539       1
-  999 V625       1
-  999 G823       1
- 1000  L42       1
- 1000 T524       1
+\if{html}{\out{<div class="sourceCode">}}\preformatted{id   leaf exposed
+ 1   K251       0
+ 2   Q702       0
+ 3    G96       0
+ 3   S949       0
+ 4   S951       0
+---               
+10999   V539       1
+10999   V625       1
+10999   G823       1
+11000    L42       1
+11000   T524       1
 }\if{html}{\out{</div>}}}
 
 \item{tree}{A dataset with one variable \code{pathString} defining the tree structure

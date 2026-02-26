@@ -144,6 +144,23 @@ test_that("Test n_exposed or n_unexposed <= 0",{
   }, regexp = "One of `n_exposed` and `n_unexposed` is less or equal to 0.")
 })
 
+test_that("Test constant exposure within individuals",{
+  expect_error({
+
+    # Change unexposed row to exposed
+    tmp <- diagnoses
+    tmp[4, "exposed"] <- 1
+    
+    TreeMineR(data = tmp,
+              tree  = data.frame(pathString = "1/KLM"),
+              p = 1/11,
+              n_exposed = 0,
+              n_unexposed = 0,
+              n_monte_carlo_sim = 10,
+              random_seed = 1234)
+  }, regexp = "Exposure is not constant within individuals in `data`.")
+})
+
 test_that("Test calculation of p based on n_exposed and n_unexposed",{
   expect_message({
     TreeMineR(data = diagnoses,

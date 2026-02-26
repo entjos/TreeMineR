@@ -1,6 +1,8 @@
 # TreeMineR (development version)
 
-# TreeMineR 1.0.3
+* Fixed issue in the example dataset: The example dataset included individuals with non-constant exposure status, i.e., individuals who were at the same time exposed and unexposed. This should not be allowed. The example dataset has been updated accordingly.
+
+* Added a check to the TreeMineR function which now throws an error if exposure status is not constant within ids.
 
 # TreeMineR 1.0.3
 
