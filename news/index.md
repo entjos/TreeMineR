@@ -1,5 +1,7 @@
 # Changelog
 
+## TreeMineR (development version)
+
 ## TreeMineR 1.0.4
 
 - Fixed issue in the example dataset: The example dataset included
