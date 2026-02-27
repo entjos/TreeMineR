@@ -133,10 +133,13 @@ TreeMineR <- function(data,
   if(is.null(p) & all(!is.null(n_exposed), !is.null(n_unexposed))) {
     p <- n_exposed / sum(n_exposed, n_unexposed)
 
-    cli::cli_inform(paste("Calculated {.code p} based on {.code n_exposed}",
-                          "and {.code n_exposed}.",
-                          "{.code p} is set to {round(p, 5)}."))
-
+    cli::cli_inform(
+      paste(
+        "Calculated {.code p} based on {.code n_exposed}",
+        "and {.code n_exposed}.",
+         "{.code p} is set to {round(p, 5)}."
+        )
+      )
   }
 
   # Check user input -----------------------------------------------------------
@@ -172,8 +175,10 @@ TreeMineR <- function(data,
   if(!is.null(dictionary) & !all(c("title", "node") %in% colnames(dictionary))){
     cli::cli_abort(
       c(
-        "x" = paste("I could not find your {.code title} and/or {.code node}",
-                    "column in your dictionary.")
+        "x" = paste(
+          "I could not find your {.code title} and/or {.code node}",
+          "column in your dictionary."
+        )
       )
     )
   }
@@ -191,10 +196,14 @@ TreeMineR <- function(data,
     if(any(n_exposed <= 0, n_unexposed <= 0)){
       cli::cli_abort(
         c(
-          "x" = paste("One of {.code n_exposed} and {.code n_unexposed} is",
-                      "less or equal to 0."),
-          "i" = paste("Both {.code n_exposed} and {.code n_unexposed}",
-                      "must be greater than 0.")
+          "x" = paste(
+            "One of {.code n_exposed} and {.code n_unexposed} is",
+            "less or equal to 0."
+          ),
+          "i" = paste(
+            "Both {.code n_exposed} and {.code n_unexposed}",
+            "must be greater than 0."
+          )
         )
       )
     }
@@ -213,10 +222,10 @@ TreeMineR <- function(data,
 
   # Estimate LLRs
   temp <- future.apply::future_lapply(
-    X = seq_len(1 + n_monte_carlo_sim),
+    X               = seq_len(1 + n_monte_carlo_sim),
     future.packages = "data.table",
-    future.seed = random_seed,
-    FUN = function(i){
+    future.seed     = random_seed,
+    FUN             = function(i){
 
       if(i != 1){
         comb[, n  := n0 + n1]
