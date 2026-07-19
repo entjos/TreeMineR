@@ -108,6 +108,26 @@ test_that("Test miss-specified delimiter",{
   }, regexp = "I could not find any match for / in `pathString`.")
 })
 
+test_that("Test p = 0",{
+  expect_error({
+    TreeMineR(data = data.frame(id = 1, leaf = "KLM", exposed = 0),
+              tree  = data.frame(pathString = "1/KLM"),
+              p = 0,
+              n_monte_carlo_sim = 10,
+              random_seed = 1234)
+  }, regexp = "`p` must be greater than 0 and smaller than 1.")
+})
+
+test_that("Test p = 1",{
+  expect_error({
+    TreeMineR(data = data.frame(id = 1, leaf = "KLM", exposed = 0),
+              tree  = data.frame(pathString = "1/KLM"),
+              p = 1,
+              n_monte_carlo_sim = 10,
+              random_seed = 1234)
+  }, regexp = "`p` must be greater than 0 and smaller than 1.")
+})
+
 test_that("Test n_exposed or n_unexposed <= 0",{
   expect_error({
     TreeMineR(data = data.frame(id = 1, leaf = "KLM", exposed = 0),

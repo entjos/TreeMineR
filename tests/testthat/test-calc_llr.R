@@ -6,3 +6,21 @@ test_that("LLR is close to 0 if q0 = p",{
 
   }, 0)
 })
+
+test_that("LLR is not NaN when all individuals are exposed (n0 = 0)",{
+  expect_equal({
+
+    calc_llr(data.table::data.table(cut = "AA1", n0 = 0, n1 = 23),
+             no_iteration = 1, p = 0.1)[["llr"]]
+
+  }, -23 * log(0.1))
+})
+
+test_that("LLR is 0 when all individuals are unexposed (n1 = 0)",{
+  expect_equal({
+
+    calc_llr(data.table::data.table(cut = "AA1", n0 = 230, n1 = 0),
+             no_iteration = 1, p = 0.1)[["llr"]]
+
+  }, 0)
+})

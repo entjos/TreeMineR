@@ -24,7 +24,13 @@ calc_llr <- function(counts, no_iteration, p){
   counts[, q1 := n1 /(n0 + n1)]
   counts[, q0 := n0 /(n0 + n1)]
 
-  counts[, lla := log(q1) * n1 + log(q0) * n0]
+  # q0 (q1) is exactly 0 only when n0 (n1) is 0, in which case the group's
+  # true log-likelihood contribution is 0. Flooring at the smallest positive
+  # double keeps log() finite so that multiplying by n0 = 0 (n1 = 0) yields 0
+  # instead of NaN (0 * -Inf), while a genuinely empty node (n0 + n1 == 0)
+  # still evaluates to NaN, since q0/q1 are NaN, not 0, in that case.
+  counts[, lla := log(pmax(q1, .Machine$double.xmin)) * n1 +
+                  log(pmax(q0, .Machine$double.xmin)) * n0]
   counts[, ll0 := log(p)  * n1 + log(1 - p)  * n0]
   counts[, llr := (lla - ll0) * as.numeric(q1 > p)]
 

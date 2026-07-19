@@ -144,6 +144,15 @@ TreeMineR <- function(data,
 
   # Check user input -----------------------------------------------------------
 
+  if(!is.null(p) && (p <= 0 || p >= 1)){
+    cli::cli_abort(
+      c(
+        "x" = "{.code p} is set to {p}.",
+        "i" = "{.code p} must be greater than 0 and smaller than 1."
+      )
+    )
+  }
+
   if("leaf" %in% colnames(tree)) {
     cli::cli_abort(
       c(
@@ -244,7 +253,7 @@ TreeMineR <- function(data,
                             by = iteration]
 
   temp <- temp[iteration == 1 & !is.nan(llr)]
-  temp[, rank := mapply(\(x) sum(test_distribution$max_llr > x) + 1, llr)]
+  temp[, rank := mapply(\(x) sum(test_distribution$max_llr >= x) + 1, llr)]
 
   # Prepare output -------------------------------------------------------------
 
