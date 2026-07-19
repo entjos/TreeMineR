@@ -20,6 +20,7 @@ for a more detailed description of the method. Let’s load the
 `TreeMineR` package to get started.
 
 ``` r
+
 library(TreeMineR)
 ```
 
@@ -33,6 +34,7 @@ unexposed. The diagnosis dataset, is fortunately, already in the right
 format. Let’s have a look:
 
 ``` r
+
 diagnoses
 #>           id   leaf exposed
 #>        <num> <char>   <num>
@@ -72,6 +74,7 @@ from your analysis.
 Let’s have a look at the first rows of the ICD-10-SE tree file:
 
 ``` r
+
 head(icd_10_se)
 #>             pathString
 #> 1 ICD-10-SE/01/A00-A09
@@ -93,6 +96,7 @@ can be set up using the `future_control` argument.
 Let’s do a test run:
 
 ``` r
+
  TreeMineR(
   data = diagnoses,
   tree  = icd_10_se,

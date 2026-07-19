@@ -20,6 +20,7 @@ information. - `icd_10_se` - `atc_codes`
 For installing the package from CRAN please use
 
 ``` r
+
 install.packages("TreeMineR")
 ```
 
@@ -27,6 +28,7 @@ If you would like to use the latest development version from GitHub
 please use
 
 ``` r
+
 # install.packages("remotes")
 remotes::install_github("entjos/TreeMineR")
 ```

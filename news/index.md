@@ -2,7 +2,31 @@
 
 ## TreeMineR (development version)
 
+- Fixed Monte Carlo P-value calculation in
+  [`TreeMineR()`](https://entjos.github.io/TreeMineR/reference/TreeMineR.md).
+  Simulated maximum log-likelihood ratios (LLRs) equal to the observed
+  LLR are now counted as at least as extreme as the observed value (`>=`
+  instead of `>`), as required for a valid Monte Carlo P-value.
+  Previously, ties were excluded, which inflated the family-wise type-I
+  error rate, particularly for sparse count data with many possible ties
+  ([\#9](https://github.com/entjos/TreeMineR/issues/9)).
+
+- Fixed `calc_llr()` so that nodes in which every individual is exposed
+  (or every individual is unexposed) no longer get an undefined (`NaN`)
+  log-likelihood ratio. Such nodes were previously dropped from both the
+  simulated reference distribution and the reported results, which could
+  bias P-values ([\#9](https://github.com/entjos/TreeMineR/issues/9)).
+
+- Added a check to
+  [`TreeMineR()`](https://entjos.github.io/TreeMineR/reference/TreeMineR.md)
+  which now throws an error if `p` is not greater than 0 and smaller
+  than 1. `p = 0` or `p = 1` made the log-likelihood ratio degenerate
+  (`Inf`) for all nodes containing exposed, respectively unexposed,
+  individuals.
+
 ## TreeMineR 1.0.4
+
+CRAN release: 2026-02-27
 
 - Fixed issue in the example dataset: The example dataset included
   individuals with non-constant exposure status, i.e., individuals who
