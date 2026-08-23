@@ -6,6 +6,10 @@
 
 * Added a check to `TreeMineR()` which now throws an error if `p` is not greater than 0 and smaller than 1. `p = 0` or `p = 1` made the log-likelihood ratio degenerate (`Inf`) for all nodes containing exposed, respectively unexposed, individuals.
 
+* Monte Carlo simulations in `TreeMineR()` now preserve the correlation between related cuts. Exposure is simulated once per individual and re-aggregated through the tree, rather than resampling every cut independently, so a parent cut's simulated count is now mechanically consistent with its children's, as it is in the observed data (#10).
+
+* Added a check which now throws an error if `data` does not contain any rows, and if `tree` contains leafs that are duplicated across different branches. Both previously caused an uninformative error from internal `data.table` operations.
+
 # TreeMineR 1.0.4
 
 * Fixed issue in the example dataset: The example dataset included individuals with non-constant exposure status, i.e., individuals who were at the same time exposed and unexposed. This should not be allowed. The example dataset has been updated accordingly.

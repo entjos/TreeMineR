@@ -121,7 +121,7 @@ TreeMineR <- function(data,
                       future_control = list(strategy = "sequential")){
 
   # Declare variables used in data.table for R CMD check
-  n1 <- n0 <- n <- llr <- iteration <- pathString <- ..p <- id <- NULL
+  n1 <- n0 <- llr <- iteration <- id <- NULL
   risk1 <- risk0 <- RR <- ..n_exposed <- ..n_unexposed <- exposed <- NULL
 
   # Convert data to data.table
@@ -220,7 +220,28 @@ TreeMineR <- function(data,
 
   # Get cuts -------------------------------------------------------------------
 
-  comb <- cut_the_tree(data, tree, delimiter)
+  # membership has one row per individual/cut combination. Since related
+  # cuts share the same underlying individuals (e.g. a parent cut's
+  # individuals are a superset of its children's), simulating exposure once
+  # per individual and re-aggregating through this fixed membership table
+  # preserves the correlation between related cuts in each Monte-Carlo
+  # simulation, rather than resampling every cut independently.
+  membership <- get_cut_membership(data, tree, delimiter)
+
+  id_exposure  <- unique(membership[, list(id, exposed)])
+  ids          <- id_exposure$id
+  n_ids        <- nrow(id_exposure)
+  real_exposed <- id_exposure$exposed
+  id_idx       <- match(membership$id, ids)
+
+  # Encode cuts as integers so that per-simulation counts can be tabulated
+  # with `tabulate()`, which is much faster than a data.table groupby when
+  # run once per Monte-Carlo simulation.
+  cut_f      <- factor(membership$cut)
+  cut_id     <- as.integer(cut_f)
+  cut_levels <- levels(cut_f)
+  n_cuts     <- length(cut_levels)
+  n_per_cut  <- tabulate(cut_id, nbins = n_cuts)
 
   # Run tree based scan statistic ----------------------------------------------
 
@@ -236,13 +257,15 @@ TreeMineR <- function(data,
     future.seed     = random_seed,
     FUN             = function(i){
 
-      if(i != 1){
-        comb[, n  := n0 + n1]
-        comb[, n1 := mapply(stats::rbinom, 1, n, ..p)]
-        comb[, n0 := n - n1]
-      }
+      exposed_i <- if(i == 1) real_exposed else stats::rbinom(n_ids, 1, p)
 
-      calc_llr(comb, i, p = p)
+      n1 <- tabulate(cut_id[exposed_i[id_idx] == 1L], nbins = n_cuts)
+
+      counts <- data.table::data.table(cut = cut_levels,
+                                       n0  = n_per_cut - n1,
+                                       n1  = n1)
+
+      calc_llr(counts, i, p = p)
 
 
     }) |> data.table::rbindlist()
