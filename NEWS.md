@@ -1,4 +1,4 @@
-# TreeMineR (development version)
+# TreeMineR 1.1.0
 
 * Fixed Monte Carlo P-value calculation in `TreeMineR()`. Simulated maximum log-likelihood ratios (LLRs) equal to the observed LLR are now counted as at least as extreme as the observed value (`>=` instead of `>`), as required for a valid Monte Carlo P-value. Previously, ties were excluded, which inflated the family-wise type-I error rate, particularly for sparse count data with many possible ties (#9).
 
