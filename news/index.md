@@ -1,6 +1,6 @@
 # Changelog
 
-## TreeMineR (development version)
+## TreeMineR 1.1.0
 
 - Fixed Monte Carlo P-value calculation in
   [`TreeMineR()`](https://entjos.github.io/TreeMineR/reference/TreeMineR.md).
