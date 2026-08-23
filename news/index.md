@@ -24,6 +24,20 @@
   (`Inf`) for all nodes containing exposed, respectively unexposed,
   individuals.
 
+- Monte Carlo simulations in
+  [`TreeMineR()`](https://entjos.github.io/TreeMineR/reference/TreeMineR.md)
+  now preserve the correlation between related cuts. Exposure is
+  simulated once per individual and re-aggregated through the tree,
+  rather than resampling every cut independently, so a parent cut’s
+  simulated count is now mechanically consistent with its children’s, as
+  it is in the observed data
+  ([\#10](https://github.com/entjos/TreeMineR/issues/10)).
+
+- Added a check which now throws an error if `data` does not contain any
+  rows, and if `tree` contains leafs that are duplicated across
+  different branches. Both previously caused an uninformative error from
+  internal `data.table` operations.
+
 ## TreeMineR 1.0.4
 
 CRAN release: 2026-02-27
