@@ -70,12 +70,15 @@
 #'  Biometrics 56(2): 323-331. DOI: 10.1111/1541-0420.00039.
 #'
 #' @examples
+#' \dontshow{.old_dt_threads <- data.table::getDTthreads()}
+#' \dontshow{data.table::setDTthreads(2)}
 #' TreeMineR(data = diagnoses,
 #'           tree  = icd_10_se,
 #'           p = 1/11,
 #'           n_monte_carlo_sim = 99,
 #'           random_seed = 1234) |>
 #'   head()
+#' \dontshow{data.table::setDTthreads(.old_dt_threads)}
 #'
 #' @return A `data.frame` with the following columns:
 #'   \describe{

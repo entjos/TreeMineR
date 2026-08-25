@@ -109,12 +109,15 @@ Monte Carlo simulation}
 Unconditional Bernoulli Tree-Based Scan Statistics for R
 }
 \examples{
+\dontshow{.old_dt_threads <- data.table::getDTthreads()}
+\dontshow{data.table::setDTthreads(2)}
 TreeMineR(data = diagnoses,
           tree  = icd_10_se,
           p = 1/11,
           n_monte_carlo_sim = 99,
           random_seed = 1234) |>
   head()
+\dontshow{data.table::setDTthreads(.old_dt_threads)}
 
 }
 \references{
