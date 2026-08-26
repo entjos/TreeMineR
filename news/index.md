@@ -2,6 +2,8 @@
 
 ## TreeMineR 1.1.0
 
+CRAN release: 2026-08-25
+
 - Fixed Monte Carlo P-value calculation in
   [`TreeMineR()`](https://entjos.github.io/TreeMineR/reference/TreeMineR.md).
   Simulated maximum log-likelihood ratios (LLRs) equal to the observed

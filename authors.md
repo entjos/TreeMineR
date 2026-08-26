@@ -10,7 +10,7 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/entjos/TreeMineR/blob/master/DESCRIPTION)
+[`DESCRIPTION`](https://github.com/entjos/TreeMineR/blob/v1.1.0/DESCRIPTION)
 
 Entrop J, Wintzell V (2026). *TreeMineR: Tree-Based Scan Statistics*. R
 package version 1.1.0, <https://entjos.github.io/TreeMineR/>.
