@@ -1,5 +1,7 @@
 # Changelog
 
+## TreeMineR (development version)
+
 ## TreeMineR 1.1.0
 
 CRAN release: 2026-08-25

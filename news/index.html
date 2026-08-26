@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">TreeMineR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.0.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -33,9 +33,12 @@
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Changelog</h1>
-      <small>Source: <a href="https://github.com/entjos/TreeMineR/blob/v1.1.0/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
+      <small>Source: <a href="https://github.com/entjos/TreeMineR/blob/master/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="development version" id="treeminer-development-version">TreeMineR (development version)<a class="anchor" aria-label="anchor" href="#treeminer-development-version"></a></h2>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.1.0" id="treeminer-110">TreeMineR 1.1.0<a class="anchor" aria-label="anchor" href="#treeminer-110"></a></h2><p class="text-muted">CRAN release: 2026-08-25</p>
 <ul><li><p>Fixed Monte Carlo P-value calculation in <code><a href="../reference/TreeMineR.html">TreeMineR()</a></code>. Simulated maximum log-likelihood ratios (LLRs) equal to the observed LLR are now counted as at least as extreme as the observed value (<code>&gt;=</code> instead of <code>&gt;</code>), as required for a valid Monte Carlo P-value. Previously, ties were excluded, which inflated the family-wise type-I error rate, particularly for sparse count data with many possible ties (<a href="https://github.com/entjos/TreeMineR/issues/9" class="external-link">#9</a>).</p></li>
