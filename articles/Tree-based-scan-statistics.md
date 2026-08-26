@@ -103,22 +103,36 @@ Let’s do a test run:
   p = 1/11,
   n_exposed = 1000,
   n_unexposed = 10000,
-  n_monte_carlo_sim = 20,
+  n_monte_carlo_sim = 9999,
   random_seed = 124,
   future_control = list("sequential")
   ) |> head()
-#>       cut  n1   n0 risk1  risk0       RR      llr          p
-#> 1      12 127  674 0.127 0.0674 1.884273 18.52600 0.04761905
-#> 2      19 337 2329 0.337 0.2329 1.446973 18.32574 0.04761905
-#> 3 V01-X59 254 1708 0.254 0.1708 1.487119 15.78202 0.04761905
-#> 4      02 221 1467 0.221 0.1467 1.506476 14.57499 0.04761905
-#> 5 V01-V99 219 1453 0.219 0.1453 1.507226 14.47571 0.04761905
-#> 6      11 134  784 0.134 0.0784 1.709184 14.47115 0.04761905
+#>       cut  n1   n0 risk1  risk0       RR      llr     p
+#> 1      12 127  674 0.127 0.0674 1.884273 18.52600 1e-04
+#> 2      19 337 2329 0.337 0.2329 1.446973 18.32574 1e-04
+#> 3 V01-X59 254 1708 0.254 0.1708 1.487119 15.78202 2e-04
+#> 4      02 221 1467 0.221 0.1467 1.506476 14.57499 2e-04
+#> 5 V01-V99 219 1453 0.219 0.1453 1.507226 14.47571 2e-04
+#> 6      11 134  784 0.134 0.0784 1.709184 14.47115 2e-04
 ```
 
-In our data, we could identify three event clusters (Ch. 12, Ch. 11,
-V01-X59) which passed the p \< 0.05 threshold, suggesting that exposed
+In our data, eleven event clusters, including Ch. 12, Ch. 11, and
+V01-X59, passed the p \< 0.05 threshold, suggesting that exposed
 individuals have a higher risk of being diagnosed with these disease
-groups than unexposed individuals. Usually, you would like to increase
-the number of Monte Carlo simulation runs to increase the stability of
-the results.
+groups than unexposed individuals.
+
+You may notice that some cuts share the exact same p-value even though
+their log-likelihood ratios (LLR) differ, e.g., V01-X59, Ch. 02,
+V01-V99, and Ch. 11 above all have p = 0.0002. This happens because the
+p-value is based on the rank of the observed LLR relative to the
+`n_monte_carlo_sim` simulated maximum LLRs: any cut whose observed LLR
+exceeds the same number of simulated maxima receives the same p-value,
+regardless of by how much it exceeds them. Increasing
+`n_monte_carlo_sim` gives a finer resolution of P-values, at the cost of
+a longer computation time.
+
+Further down the result table, you may also encounter a risk ratio (RR)
+of `Inf` for some cuts. This happens when a diagnosis is observed
+exclusively among exposed individuals, i.e., no unexposed individual
+received it, which makes the risk among the unexposed exactly zero and
+the risk ratio undefined in the usual sense.
