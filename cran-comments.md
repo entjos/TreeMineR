@@ -1,6 +1,6 @@
-# TreeMineR 1.1.0
+# TreeMineR 1.1.1
 
-This version fixes two statistical bugs in the Monte Carlo P-value calculation of `TreeMineR()` that could inflate the family-wise type-I error rate, and improves how the Monte Carlo simulations account for the tree's hierarchical structure. It also adds validation for a few previously unhandled edge cases. See `NEWS.md` for details.
+This is a documentation-only follow-up to 1.1.0: it corrects the introductory vignette, which described results from before the statistical fixes in 1.1.0. No R code was changed.
 
 ## R CMD check results
 
