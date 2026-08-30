@@ -1,6 +1,14 @@
 # Changelog
 
-## TreeMineR (development version)
+## TreeMineR 1.1.1
+
+CRAN release: 2026-08-28
+
+- Corrected the introductory vignette, which was based on results from
+  before the fixes in 1.1.0: it now reports the correct number of
+  significant clusters found in the example data, explains why several
+  cuts can share the same P-value, and explains why some cuts have an
+  infinite risk ratio (RR).
 
 ## TreeMineR 1.1.0
 
